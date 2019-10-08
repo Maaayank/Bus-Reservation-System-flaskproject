@@ -1,0 +1,178 @@
+CREATE TABLE QUERIES : 
+
+
+create table Users (
+	uid int not null ,
+	name varchar(50) ,
+	email varchar(50) ,
+	ph_no bigint ,
+	password varchar(50) 
+)
+
+create table Busses (
+	busno int not null ,
+	route varchar(50),
+	startAt int ,
+	endAt int ,
+	no_of_stops int  default 0,
+	bus_class varchar(5) default 'any',
+	ratings decimal default 0.0
+)
+
+create table stops(
+	stop_id serial not null ,
+	stop_name varchar(50) ,
+	stop_district varchar(50),
+	stop_taluka varchar(50)
+)
+
+create table bus_stops(
+	bs_id serial , 
+	busno int ,
+	stop_id int ,
+	stop_no int
+)
+
+create table bus_class(
+	bclass varchar(5),
+	class_name varchar(50),
+	no_of_seats int default 0 ,
+	reserved int default 0
+)
+
+create table Tickets(
+	ticket_no bigint ,
+	transaction_id int ,
+	pass_id int ,
+	fare decimal ,
+	uid int 
+)
+
+create table bus_passengers(
+	pass_id int not null,
+	bus_id int ,
+	pass_name varchar(50),
+	seat_no int ,
+	journeyFrm int ,
+	journeyTo int 
+)
+
+create table bus_object(
+	bus_id int,
+	bus_no int ,
+	bus_date date ,
+	seats_occupied integer[]
+)
+
+PRIMARY KEYS QUERIES :
+
+alter table users add constraint users_pk primary key(uid)
+alter table busses add constraint busses_pk primary key(busno);
+alter table stops add constraint stops_pk primary key(stop_id);
+alter table bus_stops add constraint bus_stops_pk primary key(bs_id);
+alter table bus_class add constraint bus_class_pk primary key(bclass);
+alter table bus_passengers add constraint bus_passenger_pk primary key(pass_id);
+alter table bus_object add constraint bus_object_pk primary key(bus_id);
+alter table tickets add constraint tickets_pk primary key(ticket_no);
+
+
+FOREIGN KEY QUERIES :
+
+alter table busses add constraint busses_fk1 foreign key(startat) references bus_stops(bs_id) on delete cascade on update cascade ;
+
+alter table busses add constraint busses_fk2 foreign key(endat) references bus_stops(bs_id) on delete cascade on update cascade;
+
+alter table busses add constraint busses_fk3 foreign key(bus_class) references bus_class(bclass) on delete set default on update cascade ;
+
+
+alter table bus_stops add constraint bus_stops_fk1 foreign key(busno) references busses(busno) on delete cascade on update cascade;
+
+alter table bus_stops add constraint bus_stops_fk2 foreign key(stop_id) references stops(stop_id) on delete cascade on update cascade ;
+
+
+alter table bus_object add constraint bus_object_fk1 foreign key(bus_no) references busses(busno) on delete cascade on update cascade ;
+
+
+alter table bus_passengers add constraint bus_passenger_fk1 foreign key(bus_id) references bus_object(bus_id) on delete cascade on update cascade ;
+
+alter table bus_passengers add constraint bus_passenger_fk2 foreign key(journeyfrm) references bus_stops(bs_id) on delete cascade on update cascade ;
+
+alter table bus_passengers add constraint bus_passenger_fk3 foreign key(journeyto) references bus_stops(bs_id) on delete cascade on update cascade ;
+
+
+alter table tickets add constraint tickets_fk1 foreign key(pass_id) references bus_passengers(pass_id) on delete cascade on update cascade ;
+
+alter table tickets add constraint tickets_fk2 foreign key(uid) references users(uid) on delete cascade on update cascade;
+
+
+ALTER TABLE EDITS : 
+
+alter table busses 
+alter column endat type varchar(50);
+alter column startat type varchar(50);
+
+alter table busses 
+rename  column bus_class to bclass
+
+alter table bus_object 
+rename column bus_no to busno
+
+INSERTS :
+
+insert into bus_class values('ON','ORDINARY NIGHT',24,3);
+insert into bus_class values('SS','SEMI SLEEPER LUXURY',32,4);
+insert into bus_class values('SL','SEMI LUXURY',32,4);
+insert into bus_class values('DO','DAY ORDINARY',48,5);
+insert into bus_class values('OD','ORDINARY EXPRESS',48,5);
+insert into bus_class values('AS','AC SHIVNERI',18,3);
+insert into bus_class values('SR','SLEEPER REGULAR',18,3);
+
+
+TRIGGERS :
+
+AVERAGE RATING CALCULATION TRIGGER :
+
+create trigger trg_avg_ratings before insert or update on busses
+for each row 
+execute procedure fn_avg_ratings();
+
+create or replace function fn_avg_ratings()
+returns trigger as
+$BODY$
+begin
+	if old.ratings <> 0.0 then
+	new.ratings := (old.ratings + new.ratings)/2;
+	end if ;
+	return new ;
+end;
+$BODY$
+language 'plpgsql';
+
+
+FETCH DATA :
+
+SEARCH BUS :
+
+
+select *
+from ( select  * 
+	from (select * 
+		from busses
+		where busno =  (select busno
+						 from bus_stops
+						 where stop_id = (select stop_id 
+										 from stops
+										 where stops.stop_name = 'pune' or stops.stop_district = 'pune') 
+						intersect 
+						select busno 
+						from bus_stops 
+						where stop_id = (select stop_id 
+										from stops 
+										where stops.stop_name = 'mumbai' or stops.stop_district = 'mumbai' )
+        )) as q1 inner join bus_class on q1.bclass = bus_class.bclass
+    ) as q2 left outer join  
+(select * 
+from bus_object
+where bus_date = '10-08-2019') as q3
+on q2.busno = q3.busno 
+

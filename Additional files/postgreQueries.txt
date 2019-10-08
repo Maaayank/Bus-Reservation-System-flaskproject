@@ -1,0 +1,204 @@
+post gre queries 
+// daily work
+
+insert into busses(bus_no,route_name,bus_class,dept_time,arvl_time,no_of_stops) values (1,'123','sl','00:15','00:20',3)
+
+select * from busses 
+
+insert into stops (name,district,taluka) values('a','a','a');
+insert into stops (name,district,taluka) values('b','a','a');
+insert into stops (name,district,taluka) values('c','a','a');
+insert into stops (name,district,taluka) values('e','a','a');
+
+
+alter table stops alter column stop_id type serial
+
+select * from stops
+
+insert into bus_stops(bus_no,stop_id,stop_no) values(1,32,1)
+
+select * from bus_stops
+
+alter table bus_stops alter column stop_no type serial
+
+CREATE FUNCTION inc(val integer) RETURNS integer AS $$
+BEGIN
+RETURN val + 1;
+END; $$
+LANGUAGE PLPGSQL
+
+create or replace function test() returns integer as 
+$BODY$
+begin
+
+if  2 = (select count(bus_stops.bus_no) from bus_stops where bus_no = 1) then 	
+	update  busses set bus_source= 2 where  busses.bus_no = 1;
+	end if ;
+	
+return 1 ;
+end;
+$BODY$
+language plpgsql;
+		
+select test();
+
+select * from busses
+
+select count(*) from bus_stops where bus_stops.bus_no = 1
+
+delete from bus_stops;
+delete from stops ;
+delete from busses ;
+
+alter table bus_stops drop constraint stop_id_sk
+
+alter table busses alter column bus_dest drop not null
+
+alter table bus_stops add constraint  stop_if_sk
+foreign key(stop_id) references stops(stop_id) on delete cascade
+
+alter table busses drop constraint dest_fk
+alter table busses add constraint dest_fk
+foreign key(bus_dest) references bus_stops(id) on delete cascade
+
+select count(*) from bus_stops where bus_no = 1
+select no_of_stops from busses where bus_no = 1
+
+alter table busses alter column bus_source drop not null
+alter table busses alter column bus_dest drop not null
+
+create or replace function adding_fks_to_busses()
+returns trigger as
+$BODY$
+declare 
+ val integer ;
+begin
+--  select into val count(*) from bus_stops where bus_no = new.bus_no;
+
+raise notice 'inside function %',new.bus_no;
+
+if  (select count(*) from bus_stops where bus_no = new.bus_no) = 0 then
+		update busses set bus_source = new.stop_id where  busses.bus_no = new.bus_no;
+		raise notice 'inside if';
+		end if ;
+		
+if (select no_of_stops from busses where bus_no = new.bus_no)
+	=
+	(select count(*) from bus_stops where bus_no = new.bus_no) then 
+	raise notice 'inside 2nd if';
+	update busses set bus_dest=new.stop_id where  bus_no = new.bus_no;
+	end if ;
+	
+return new ;
+end;
+$BODY$
+language 'plpgsql';
+
+		
+drop trigger add_fks_trigger on bus_stops ;
+
+create trigger add_fks_trigger before insert on bus_stops 
+for each statement
+execute procedure adding_fks_to_busses();
+
+//daily work 2
+
+create table test1(
+	col0 integer ,
+	col1 integer null,
+	col2 integer null,
+	constraint pk_test1 primary key(col1)
+)
+
+create table test2(
+	col3 integer ,
+	col4 integer null ,
+	col5 integer null,
+	constraint pk_test2 primary key(col3)
+)
+
+create or replace function test_fn() returns trigger as 
+$$
+begin
+	raise notice 'inside  fn %',new.'col0';
+	insert into test2 values(new.col0,new.col1,new.col2);
+	raise notice 'done insertion';
+return new;
+end;
+$$
+language 'plpgsql'
+
+drop trigger test_trigger on test1
+create trigger test_trigger after insert on test1 
+for each row
+execute  procedure test_fn();
+
+delete from test1
+insert into test1 values(3,2,3)
+
+drop trigger add_fks_trigger on bus_stops;
+
+create trigger add_fks_trigger after insert on bus_stops 
+for each row 
+execute procedure adding_fks_to_busses()
+
+delete from bus_stops;
+delete from stops ;
+delete from busses ;
+
+insert into busses(bus_no,route_name,bus_class,dept_time,arvl_time,no_of_stops) values (1,'123','sl','00:15','00:20',3)
+
+select * from busses 
+
+insert into stops (name,district,taluka) values('a','a','a');
+insert into stops (name,district,taluka) values('b','a','a');
+insert into stops (name,district,taluka) values('c','a','a');
+insert into stops (name,district,taluka) values('d','a','a');
+
+
+select * from stops
+
+insert into bus_stops(bus_no,stop_id,stop_no) values(1,45,1)
+
+select * from bus_stops
+
+set constraints source_fk deferred
+
+
+create or replace function adding_fks_to_busses()
+returns trigger as
+$BODY$
+declare 
+ val integer ;
+begin
+
+set constraints all deferred ;
+
+raise notice 'inside function %',new.bus_no;
+
+if  (select count(*) from bus_stops where bus_no = new.bus_no) = 1 then
+		update busses set bus_source = new.id where  busses.bus_no = new.bus_no;
+		raise notice 'inside if';
+		end if ;
+		
+if (select no_of_stops from busses where bus_no = new.bus_no)
+	=
+	(select count(*) from bus_stops where bus_no = new.bus_no) then 
+	raise notice 'inside 2nd if';
+	update busses set bus_dest=new.id where  bus_no = new.bus_no;
+	end if ;
+	
+return new ;
+end;
+$BODY$
+language 'plpgsql';
+
+alter table busses drop constraint dest_fk
+alter table busses add constraint dest_fk foreign key(bus_dest) references bus_stops(id) deferrable initially deferred
+
+alter table busses drop constraint source_fk;
+alter table busses add constraint source_fk foreign key(bus_source) references bus_stops(id) deferrable initially deferred
+
+
+
+		

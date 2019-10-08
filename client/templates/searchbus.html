@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<script>
+  {% if formdetails is not none %}
+      document.getElementsByName("source").value = {{formdetails.source}};
+      document.getElementsByName("dest").value = {{formdetails.dest}};
+      document.getElementsByName("bus_class").value = {{formdetails.bus_class}};
+      document.getElementsByName("jdate").value = {{formdetails.jdate}};
+      {% endif %}
+</script>
+
+<script>
+  var stops = JSON.parse({{stops | tojson | safe}});
+  console.log(stops)
+</script>
+
+<script>
+
+  $(document).ready(function(){
+
+      $("#source").autocomplete({
+          source: stops
+
+      });
+
+      $("#dest").autocomplete({
+          source: stops
+      })
+  })
+</script>
+
+<section>
+    <section style="width: 40% ;height: auto; float: left;">
+        <div id=form>
+            <form autocomplete="off" action="/searchbus/" method="POST">
+
+            <div class="form-group">
+            <label class="control-label" for="source">Source :</label>
+            <input type="text" id="source" name="source" class="form-control" placeholder="Enter Source ">
+            </div>
+            
+            <div class="form-group">
+            <label class="control-label" for="dest">Destination :</label>
+            <input type="text" id="dest" name="dest" class="form-control" placeholder="Enter Destination">
+            </div>
+            
+            <label for dropdown>Class :</label>
+            <select name = "bus_class">
+              <option value="SS">SEMI SLEEPER LUXURY</option>
+              <option value="AS">AC SHIVNERI</option>
+              <option value="OD">ORDINARY EXPRESS</option>
+              <option value="ON">ORDINARY NIGHT</option>
+              <option value="DO">DAY ORDINARY</option>
+              <option value="SR">SLEEPER REGULAR</option>
+              <option value="SL">SEMI LUXURY</option>
+              <option value="ANY" selected="selected">ANY</option>
+            </select>
+            <br>
+            <br>
+            <div class="form-group">
+            <label class="control-label" for="jdate">Enter Journey Date :</label>
+            <input type="date" name="jdate" class="form-control" placeholder="EnterJourney Date">
+            </div>
+            <br>
+            <input type="submit" name="submit" class="btn" style="background-color: rgb(78, 189, 253) ; border :2px solid rgb(245, 245, 245)">
+            </form>
+            </div>
+    </section>
+    <section style="width: 60% ; float: left;">
+      <div class="bus_card sort_by" style="height : 30px ; border-bottom-left-radius: 10px ; border-bottom-right-radius: 10px ; background-color: cornflowerblue">
+        <ul>
+          <li>DURATION</li>
+          <li>RATINGS</li>
+          <li>FARE </li>
+          <li>AVAILABILITY</li>
+     
+        </ul>
+      </div>
+      <ul>
+      {% for card in results %}
+      <div class="bus_card cards">
+        <div style="width: 100% ;height: 100%; ">
+          <div style="float: right; width : 10% ; height : 100%">
+            <div style="padding : 5px  ; height: 100%;  background-color: rgb(0, 233, 39); border-bottom-right-radius: 18px">BOOK</div>    
+          </div>
+          <div style="padding-top : 10px ;width : 90% ; height: 100% ;float: left;">
+            <div style="width: 100% ; float: left; height: 33%;">
+              <div class="col-sm-2">{{card[0]}}</div>
+              <div class="col-sm-3">{{formdetails.jdate}}</div>
+              <div class="col-sm-2">{{formdetails.source}}</div>
+              <div class="col-sm-2"></div>
+              <div class="col-sm-2">{{formdetails.dest}}</div>
+              <div class="col-sm-1">{{card.ratings}}</div>
+            </div>
+            <div style="width: 100% ; float: left; height: 33%;">
+              <div class="col-sm-5">{{card[1]}}</div>
+              <div class="col-sm-2">19:30</div>
+              <div class="col-sm-2">02h 25m</div>
+              <div class="col-sm-2">21:55</div>
+              <div class="col-sm-1">455</div>
+            </div>
+            <div style="width: 100% ; float: left; height: 33%;">
+              <div class="col-sm-5">{{card[5]}}</div>
+              <div class="col-sm-2">seats : </div>
+              <div class="col-sm-2">{{card[11]}}</div>
+              <div class="col-sm-2">available : </div>
+              <div class="col-sm-1">{{card[11] -  card[16]|length  if card[16]!= None else card[11] }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </ul>
+
+    </section>
+  </section> 
+{% endblock %}

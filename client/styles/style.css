@@ -1,0 +1,154 @@
+.ui-autocomplete{
+	max-height: 500px;
+}
+
+#logo{
+	width : 70px;
+	height : 70px;
+	float: left;
+	border-radius: 25px
+}
+
+#base-header{
+	background-color: aliceblue;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+#navbar-header{
+	justify-content: center;
+}
+
+img{
+	width: 100px;
+	height: 100px;
+}
+
+body{
+	background-image: url("/assets/3.jpg");
+	background-repeat: no-repeat;
+	background-size: 2000px 850px;
+}
+h3{
+	padding-left: 20px;
+	color: white;
+	font-style: italic;
+	display: inline;	
+}
+#main-header{
+	width: 100%;
+	height: 80px;
+	background:#1aaa1a;
+	float:left;
+	margin-top:-15px;
+}
+#fs
+{
+	border:1px solid black;
+	margin-left:10%;
+	margin-right:30%;
+	text-align:center;
+	background-image:url("images/3.jpg");
+}
+
+#nav
+{
+	border: 1px solid black;
+	padding: auto;
+	margin: auto;
+	background-color: green
+	
+	
+}
+
+#nav h2{
+	padding: 14px 2px;
+	color: white;
+	margin-left: 220px;
+	margin-top: -115px;
+}
+#nav ul{
+	margin-left: 250px;
+
+}
+#nav ul li{
+	display: inline;
+	
+	padding: 10px 20px;
+	
+	
+	
+}
+#nav ul li a{
+	color: white
+}
+ footer{
+	 bottom: 0;
+	 right: 0;
+	 left: 0;
+	 position: fixed;
+	 border-top: 2px solid black;
+	 background-color: black;
+	 
+ }
+ footer ul{
+	 margin-left: 60px;
+ }
+ footer ul li{
+	 display: inline;
+ }
+
+ .fa{
+	font-size: 30px;
+	text-align: center;
+	text-decoration: none;
+  	margin: 5px 2px;
+  	width: 50px;
+ }
+ fieldset{
+	 border : 1px solid black;
+ }
+
+ form{
+ 	padding-left: 15px;
+ 	padding-top:10px;
+	 padding-bottom: 25px;
+	 padding-right: 25px
+ }
+ #form{
+	margin-left: 25px;
+	margin-top:10px;
+	border: 2px solid rgb(13, 4, 97);
+	width: 90%;
+	height:auto;
+	border-radius: 25px;
+	background-color: rgb(61, 162, 245);
+ }
+
+ 
+
+.bus_card{
+	width: 90%;
+	margin-left: 2% ;
+	margin-bottom: 20px;
+}
+
+.cards{
+
+	padding-left: 5px;
+	height: 120px;
+	border-radius: 25px;
+	background-color: rgb(161, 255, 235);
+	border-bottom: 10px solid black;
+
+}
+
+.sort_by ul li{
+	list-style-type: none;
+	float: left;
+	margin-left: 25px;
+}
+ 
+
+

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- <script>
+    var stops = JSON.parse({{stops | tojson | safe}});
+    console.log(stops)
+</script> -->
+
+<script>
+    var stops = JSON.parse({{stops | tojson | safe}});
+    console.log(stops)
+
+    $(document).ready(function(){
+        $("#source").autocomplete({
+            source: stops
+
+        });
+
+        $("#dest").autocomplete({
+            source: stops
+        })
+    })
+</script>
+
+<section >
+    <div id=form>
+    <form autocomplete="off" action="/searchbus/" method="POST">
+    
+    <div class="form-group">
+    <label class="control-label" for="source">Source :</label>
+    <input type="text" id="source" name="source" class="form-control" placeholder="Enter Source ">
+    </div>
+    
+    <div class="form-group">
+    <label class="control-label" for="dest">Destination :</label>
+    <input type="text" id="dest" name="dest" class="form-control" placeholder="Enter Destination">
+    </div>
+    
+    <label for dropdown>Class :</label>
+    <select name = "bus_class">
+    <option value="SS">SEMI SLEEPER LUXURY</option>
+    <option value="AS">AC SHIVNERI</option>
+    <option value="OD">ORDINARY EXPRESS</option>
+    <option value="ON">ORDINARY NIGHT</option>
+    <option value="DO">DAY ORDINARY</option>
+    <option value="SR">SLEEPER REGULAR</option>
+    <option value="SL">SEMI LUXURY</option>
+    <option value="ANY" selected="selected">ANY</option>
+    </select>
+    <br>
+    <br>
+    <div class="form-group">
+    <label class="control-label" for="jdate">Enter Journey Date :</label>
+    <input type="date" name="jdate" class="form-control" placeholder="EnterJourney Date">
+    </div>
+    <br>
+    <input type="submit" name="submit" class="btn" style="background-color: rgb(78, 189, 253) ; border :2px solid rgb(245, 245, 245)">
+    </form>
+    </div>
+</section>
+
+{% endblock %}

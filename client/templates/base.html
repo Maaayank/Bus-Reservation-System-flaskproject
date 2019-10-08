@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MSRTC_HOME PAGE</title>
+
+  <link href="/styles/style.css" rel="stylesheet" >
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+  <section>
+    <header>
+    <nav class="navbar " style="background-color: rgb(54, 193, 218)  ; height : 150px">
+      <div class="navbar-header">
+        <a class="navbar-brand "  href="/"><img src = "/assets/logo.jpg" alt = "MSRTC" id="logo"/><h3 style="float : left ; margin-left: 25px ;color: rgb(78, 4, 4); text-decoration-style: wavy"><b>MSRTC Online Ticket Service</b></h3></a>
+      </div>
+        <div class="container-fluid" id="base-header" >
+          
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/searchbus/">Search Bus</a></li>
+            <li><a href="/bus/livestatus">Live Status</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="/logout/">logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    </section>
+
+    <!-- dynamic part of the html -->
+    {% block content %}
+    {% endblock %}
+
+<!-- footer part -->
+<footer>
+  <section class= "container-fluid">
+	<h3 style="float : left ; margin-left: 25px ;color: rgb(19, 153, 231); text-decoration-style: wavy">Join Us at</h3>
+	<ul style = "float: left ; margin-top : 10px">
+		<li><a href="#" class="fa fa-facebook">  facebook   </a></li>
+		<li><a href="" class="fa fa-twitter">  twitter    </a></li>   
+		<li><a href="#" class="fa fa-google">  google+    </a></li>
+		<li><a href="#" class="fa fa-linkedin">  linkedin   </a></li>
+		<li><a href="#" class="fa fa-youtube">  youtube</a></li>
+  </ul>
+</section>
+</footer>
+</body>
+</html>
