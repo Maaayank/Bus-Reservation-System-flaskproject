@@ -24,8 +24,8 @@ def searchBus() :
     dest = request.form['dest']
     jdate = request.form['jdate']
     bus_class = request.form['bus_class']
-    SQL_final = "select q2.busno , route , no_of_stops , bclass , arr_time , dept_time , class_name  ,no_of_seats , reserved , bus_date , seats_occupied , class_inc from ( select  busno , route , no_of_stops , q1.bclass , arr_time , dept_time , class_name  ,no_of_seats , reserved , class_inc from (select busno , route , no_of_stops , bclass , arr_time , dept_time from busses where busno in  (select busno from bus_stops where stop_id in (select stop_id from stops where stops.stop_name = :source) intersect select busno from bus_stops where stop_id in (select stop_id from stops where stops.stop_name = :dest ) ) ) as q1 inner join bus_class on q1.bclass = bus_class.bclass ) as q2 left outer join (select * from bus_object where bus_date = :jdate) as q3 on q2.busno = q3.busno "
-    SQL_final2 = "select q2.busno , route , no_of_stops , bclass , arr_time , dept_time , class_name  ,no_of_seats , reserved , bus_date , seats_occupied , class_inc from ( select  busno , route , no_of_stops , q1.bclass , arr_time , dept_time , class_name  ,no_of_seats , reserved , class_inc from (select busno , route , no_of_stops , bclass , arr_time , dept_time from busses where busno in  (select busno from bus_stops where stop_id in (select stop_id from stops where stops.stop_name = :source) intersect select busno from bus_stops where stop_id in (select stop_id from stops where stops.stop_name = :dest ) ) ) as q1 inner join (select * from bus_class where bclass = ':busclass') as q4  on q1.bclass = q4.bclass ) as q2 left outer join (select * from bus_object where bus_date = :jdate) as q3 on q2.busno = q3.busno "
+    SQL_final = "select q2.busno , route , no_of_stops  , arr_time , dept_time , class_name  ,no_of_seats , reserved , bus_date , seats_occupied , class_inc from ( select  busno , route , no_of_stops , q1.bclass , arr_time , dept_time , class_name  ,no_of_seats , reserved , class_inc from (select busno , route , no_of_stops , bclass , arr_time , dept_time from busses where busno in  (select busno from bus_stops where stop_id in (select stop_id from stops where stops.stop_name = :source) intersect select busno from bus_stops where stop_id in (select stop_id from stops where stops.stop_name = :dest ) ) ) as q1 inner join bus_class on q1.bclass = bus_class.bclass ) as q2 left outer join (select * from bus_object where bus_date = :jdate) as q3 on q2.busno = q3.busno "
+    SQL_final2 = "select q2.busno , route , no_of_stops , arr_time , dept_time , class_name  ,no_of_seats , reserved , bus_date , seats_occupied , class_inc from ( select  busno , route , no_of_stops , q1.bclass , arr_time , dept_time , class_name  ,no_of_seats , reserved , class_inc from (select busno , route , no_of_stops , bclass , arr_time , dept_time from busses where busno in  (select busno from bus_stops where stop_id in (select stop_id from stops where stops.stop_name = :source) intersect select busno from bus_stops where stop_id in (select stop_id from stops where stops.stop_name = :dest ) ) ) as q1 inner join (select * from bus_class where bclass = ':busclass') as q4  on q1.bclass = q4.bclass ) as q2 left outer join (select * from bus_object where bus_date = :jdate) as q3 on q2.busno = q3.busno "
 
     print("hello")
     if bus_class  != "ANY" :
@@ -40,25 +40,42 @@ def searchBus() :
         i = 0 
         while i < len(bus_details) :
             dropornot = db.session.execute("select x.in_no , y.out_no from (select busno ,stop_no as in_no , stop_name as in_name , i.stop_id as in_id from (select * from bus_stops where busno = 34567 ) as i join ( select * from stops where stop_name  = ':source' ) as s on i.stop_id = s.stop_id ) as x join (select busno ,stop_no as out_no , stop_name as out_name , j.stop_id as out_id from (select * from bus_stops where busno = 12345) as j join ( select * from stops where stop_name  = ':dest') as d on j.stop_id = d.stop_id ) as y on x.busno = y.busno ")
-            inn = dropornot.in_no
-            out = dropornot.out_no
+            inn = dropornot.first().in_no
+            out = dropornot.first().out_no
             if(inn < out) :
                 bus_details.append(inn)
                 bus_details.append(out)
-                bus_details.append(50 + bus_details[i][2]*bus_details[i][-3])
-               #todo further work
+                bus_details.append(100 + (bus_details[i][-1] - bus_details[i][-2])*bus_details[i][-3])
+                in_time , outtime  = getTimes(bus_details[i].pop(3),bus_details[i].pop(4),inn,out,bus_details[i].pop(2))
+                bus_details[i].append(intime)
+                bus_details[i].append(outtime)
                 i += 1 
             else :
                 bus_details.pop(i)
-
-            
-
 
     except : print("no bus")
     
     return render_template('searchbus.html',formdetails = request.form,results = bus_details,stops = getStopsData())
 
         
+def getTimes(arr,dept,inn,out,nos) :
+    arr = list(map(int,arr.split(':')))
+    dest = list(map(int,dept.split(':')))
+
+    arr =  arr[1]*60*1000 + arr[0]*60*60*1000
+    dept = dept[1]*60*1000 + dept[0]*60*60*1000
+
+    tTime = dept - arr
+    st = tTime//nos
+    in_time = st*inn//1000
+    out_time = st*out//1000
+
+    in_time = "" + in_time//3600  + ':' + (in_time%3600)//60
+    out_time = "" + out_time//3600 + ':' + (out_time%3600)//60
+
+    return in_time , out_time
+
+
 
 # select *
 # from ( select  *
