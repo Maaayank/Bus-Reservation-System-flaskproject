@@ -1,0 +1,486 @@
+{% extends "base.html" %}
+{% block content %}
+      
+    <script>
+        var stops = JSON.parse({{stops | tojson | safe}});
+        
+
+        $(document).ready(function(){
+
+
+            $(".avail_seatings").attr("src","/assets/ava.gif").css("height","30").css("width","30");
+
+            $(".avail_sleeping").attr("src","/assets/avail.JPG").css("height","25").css("width","30");
+
+            $('.unavail_seatings').attr("src","/assets/book.gif").css("height","30").css("width","30");
+
+            $(".unavail_sleeping").attr("src","/assets/unavail.JPG").css("height","30").css("width","30");
+
+            $(".sel_seating").attr("src","/assets/sel.gif").css("height","30").css("width","30");
+
+            $(".sel_sleeping").attr("src","/assets/booked.JPG").css("height","30").css("width","30");
+
+            $("#source").autocomplete({
+                source: function(request,response){
+                var result = $.ui.autocomplete.filter(stops,request.term);
+                response(result.slice(0,10));
+                }
+            });
+
+            $("#dest").autocomplete({
+                source: function(request,response){
+                var result = $.ui.autocomplete.filter(stops,request.term);
+                response(result.slice(0,10));
+                }
+            });
+
+            $('#datee').datepicker({ dateFormat: 'dd-mm-yy' });
+
+        });
+    </script>
+    <br>
+    <section  style="overflow: hidden; width: 100%;" class="container-fluid">
+        <div class="row">
+                <div class="col-3" style="padding:10px;" >
+                        <form autocomplete="off" action="/searchbus/" method="POST"  style="width: 100%; height: 400px; background-color: rgb(7, 178, 221); padding: 10px; border-radius: 2px;">
+                        <div class="col-12" style="text-align: justify; font-size: x-large; margin: 10px; ">SEARCH BUS</div>
+                        <div class="form-group col-12">
+                                <label class="control-label"  style =" font:medium" for="source">Source :</label>
+                                <input type="text" id="source" name="source" class="form-control" placeholder="Enter Source">
+                                </div>
+                                <div class="form-group col-12">
+                                        <label class="control-label" style =" font:medium" for="dest">Destination :</label>
+                                        <input type="text" id="dest" name="dest" class="form-control" placeholder="Enter Destination">
+                                        </div>
+                                        <div class="col-12">
+                                                <label style =" font:medium" for dropdown>Class :</label>
+                                                <select name = "bus_class" class="form-control">
+                                                <option value="SS">SEMI SLEEPER LUXURY</option>
+                                                <option value="AS">AC SHIVNERI</option>
+                                                <option value="OD">ORDINARY EXPRESS</option>
+                                                <option value="ON">ORDINARY NIGHT</option>
+                                                <option value="DO">DAY ORDINARY</option>
+                                                <option value="SR">SLEEPER REGULAR</option>
+                                                <option value="SL">SEMI LUXURY</option>
+                                                <option value="ANY" selected="selected">ANY</option>
+                                                </select>
+                                        </div><br>
+                                        <div class="form-group col-12">
+                                                <label style =" font:medium"  class="control-label" for="jdate">Enter Journey Date :</label>
+                                                <input type="text" id="datee" name="jdate" class="form-control" placeholder="EnterJourney Date">
+                                                </div>
+                                        <input type="submit" name="submit" class="btn " style="background-color: rgb(119, 209, 245) ; margin-right: 25px; padding-left: 20px; float: right;">
+                        </form>
+                    </div>
+                    <div class="searchResultsSection col-9">
+                            <div class="col-sm-12" >
+        
+                                {% for card in results %}
+                                {% set seatNos = [0] %}
+                                    <div class="row busses" id={{card[0]}} style="margin-bottom: 10px;">
+                                        <div class="col-sm-12">
+                                                <div class="bus-card bg-light text-black-50">
+                                                        <div class="card-header"  >
+                                                            <div class="row">
+                                                                
+                                                                <div class="col-sm-2">
+                                                                        <i class="material-icons">toc</i><h4>Bus_no.</h4>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                        <i class="material-icons">location_on</i><h4>Source</h4>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                            <i class="material-icons">location_on</i><h4>Destination</h4>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                                <span class="glyphicon glyphicon-time"></span><h4>Get in</h4>
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                    <span class="glyphicon glyphicon-time"></span><h4>Get Out</h4>
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                    <i class="material-icons">star</i><h4>Rating</h4>   
+                                                                                    
+                                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                            
+                                                                <div class="row">
+                                                                        <div class="col-sm-2">
+                                                                            <h4 class="busno">{{card[0]}}</h4>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                                <h4 class="source">{{formdetails.source}}</h4>
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                    <h4 class="desti">{{formdetails.dest}}</h4>
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                        <h4>{{card[-2]}}</h4>
+                                                                                    </div>
+                                                                                    <div class="col-sm-2">
+                                                                                            <h4>{{card[-1]}}</h4>
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+                                                                                                <h4>{{card[-6]}}</h4>
+                                                                                            </div>
+                                                                    </div> <hr>
+                                                                    <div class="row">
+                                                                            <div class="col-sm-1">
+                                                                                <h4>Route : </h4>
+                                                                            </div>
+                                                                            <div class="col-sm-3">
+                                                                                 <h4 id="check1">{{card[1]}}</h4>
+                                                                             </div>
+                                                                             <div class="col-sm-2">
+                                                                                    <h4>{{card[3]}}</h4>
+                                                                                </div>
+                                                                             <div class="col-sm-1">
+                                                                                 <h4>Date:</h4>
+                                                 
+                                                                             </div>
+                                                                             <div class="col-sm-2">
+                                                                                     <h4 class="tme">{{formdetails.jdate}}</h4>
+                                                                                 </div>
+        
+                                                                            <div class="col-sm-1">
+                                                                                    <h4>Fare : </h4>
+                                                                            </div>
+                                                                            <div class="col-sm-1">
+                                                                                    <h4 class="price">{{card[-3]}}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <h4>Services:</h4>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                        <a href="" ><span class="fa fa-wifi" style="font-size: 36px;color: black;" title="WIFI available"></span></a>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                            <a href="" ><span class="glyphicon glyphicon-facetime-video" style="font-size: 36px;color: black;" title="DVD coach"></span></a>
+                                                                        </div>
+                                                                        <div class="col-sm-1">
+                                                                                <a href=""><i class="material-icons" style="font-size: 36px;color: black;">exit_to_app</i></a>
+                                                                            </div>
+                                                                            <div class="col-sm-1">
+                                                                                    <a href=""><i class="material-icons" style="font-size: 36px;color: black;">near_me</i></a>
+                                                                                </div>
+                                                                                <div class="col-sm-4"></div>
+                                        
+                                                                <div class="col-sm-1 seats" name={{card[0]}}  style="background-color: rgb(194, 247, 226);border: 2px solid black; cursor: pointer;">
+                                                                    <h3>Seats</h3>
+                                                                </div>
+                                                                <div class="col-sm-1 book" name={{card[0]}}  style="background-color: #b2fcef;border: 2px solid black; cursor: pointer;">
+                                                                    <h3>Book</h3>
+                                                                </div>    
+                                                            </div>
+                                                        </div>
+                                                        {% if card[2]=='ORDINARY EXPRESS' or card[2] == 'SEMI LUXURY' or card[2] == 'DAY ORDINARY' %}
+        
+                                                        <div class="bus-extended-card bg-light text-black-50 seating" style="display: none;">
+                                                            <div class="card-header">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <h4>Seats:24</h4>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                                <h4>Available:<span id="ava">{{ 24 if card[-8] == None else  24 - card[-8]|length }}</span></h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        
+                                                                        <div class="col-sm-1" >  
+                                                                            <img src="/assets/driver.JPG" style="height:36px;width:35px;">
+                                                                        </div>
+        
+        
+                                                                        <div class="col-sm-6" style="border: 1px solid black;">
+        
+                                                                        {% for i in range(4) %}
+                                                                            <div class="row" >
+                                                                            
+                                                                                {% for _ in range(6) %}   
+                                                                                {% if card[-8] != None %}
+                                                                            
+                                                                                    {% if seatNos[-1] in card[-8] %}
+                                                                                    <div class="col-sm-2">
+                                                                                        <img   title={{seatNos[-1]}} class="unavail_seatings"   >
+                                                                                    </div>
+                                                                                    {% else %}
+                                                                                    <div class="col-sm-2">
+                                                                                        <img class = avail_seatings title={{seatNos[-1]}}    >
+                                                                                    </div>
+                                                                                    {% endif %}
+                                                                                {% else %}
+                                            
+                                                                                <div class="col-sm-2">
+                                                                                    <img   title={{seatNos[-1]}} class="avail_seatings"  >
+                                                                                </div>
+                                                                                {% endif %}
+                                                                                {% set __ = seatNos.append(seatNos[-1] + 1) %}
+                                                                                {% endfor %}
+                                                                                                    
+                                                                            </div>
+                                                                            
+                                                                            {% if i == 1 %}
+                                                                            <div class="row" style="height: 20px;border-bottom:1px solid black;border-top:1px solid black; ">
+                                        
+                                                                            </div>
+                                                                            {% endif %}
+        
+                                                                        {% endfor %}
+                                                                            
+                                                                        </div>
+        
+        
+                                                                            <div class="col-sm-5">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-2">
+                                            
+                                                                                    </div>
+                                            
+                                                                                    <div class="col-sm-1">
+                                                                                        <img class="avail_seatings">
+                                                                                    </div>
+                                                                                    <div class="col-sm-9">
+                                                                                            <h4>:Available</h4>
+                                                                                        </div>
+                                                                                    
+                                                                                </div>
+                                                                                
+                                                                                    <div class="row">
+                                                                                            <div class="col-sm-2">
+                                                    
+                                                                                            </div>
+                                                    
+                                                                                            <div class="col-sm-1">
+                                                                                                <img class="unavail_seatings" >
+                                                                                            </div>
+                                                                                            <div class="col-sm-9">
+                                                                                                    <h4>:Booked</h4>
+                                                                                                </div>
+                                                                                            
+                                                                                        </div>
+                                            
+                                                                            </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                        </div>
+                                                        {% else %}
+                                                        <div class="bus-extended-card bg-light text-black-50 sleeping" style="display: none;"  >
+                                
+                                                            <div class="card-header">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <h4>Seats:36</h4>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                                <h4>Available:<span id="ava">{{ 36 if card[-8] == None else  36 - card[-8]|length }}</span></h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-1" >
+                                                                                <img src="/assets/driver.JPG" style="height:36px; margin-top: 70px;width:35px;" >
+                                            
+                                                                            </div>
+        
+                                                                            <div class="col-sm-6">
+        
+                                                                                <div class="row" >
+                                                                                    
+                                                                                    <div class="col-sm-12">
+                                                                                        <h4 style="text-align: center;">Upper Level</h4>
+                                                                                    </div>
+                                
+                                                                                </div><hr>
+        
+                                                                                {%  for i in range(2) %}
+                                                                                <div class="row" ><br>
+        
+                                                                                
+                                                                                    {% for _ in range(6) %}   
+                                                                                    {% if card[-8] != None %}
+                                                                               
+                                                                                        {% if seatNos[-1] in card[-8] %}
+                                                                                        <div class="col-sm-2">
+                                                                                            <img  title={{seatNos[-1]}} class="unavail_sleeping"  >
+                                                                                        </div>
+                                                                                        {% else %}
+                                                                                        <div class="col-sm-2">
+                                                                                            <img  title={{seatNos[-1]}} class="avail_sleeping"  >
+                                                                                        </div>
+                                                                                        {% endif %}
+                                                                                    {% else %}
+                                                                                    
+                                                                                    <div class="col-sm-2">
+                                                                                        <img  title={{seatNos[-1]}}   class="avail_sleeping" >
+                                                                                    </div>
+                                                                                    {% endif %}
+                                                                                    {% set __ = seatNos.append(seatNos[-1] + 1) %}
+                                                                                    {% endfor %}
+                                                                                                        
+                                                                                </div>
+                                                                                <div class="row" >
+        
+                                                                                
+                                                                                    {% for _ in range(6) %}   
+                                                                                    {% if card[-8] != None %}
+                                                                             
+                                                                                        {% if seatNos[-1] in card[-8] %}
+                                                                                        <div class="col-sm-2">
+                                                                                            <img  title={{seatNos[-1]}} class="unavail_sleeping"  >
+                                                                                        </div>
+                                                                                        {% else %}
+                                                                                        <div class="col-sm-2">
+                                                                                            <img  title={{seatNos[-1]}}  class="avail_sleeping" >
+                                                                                        </div>
+                                                                                        {% endif %}
+                                                                                    {% else %}
+                                                                                    
+                                                                                    <div class="col-sm-2">
+                                                                                        <img  title={{seatNos[-1]}}  class="avail_sleeping" >
+                                                                                    </div>
+                                                                                    {% endif %}
+                                                                                    {% set __ = seatNos.append(seatNos[-1] + 1) %}
+                                                                                    {% endfor %}
+                                                                                                        
+                                                                                </div>
+                                                                                <div class="row" style="height: 15px;">
+                                
+                                                                                </div>
+                                                                                
+                                                                                <div class="row" >
+        
+                                                                                
+                                                                                    {% for _ in range(6) %}   
+                                                                                    {% if card[-8] != None %}
+                                                                                
+                                                                                        {% if seatNos[-1] in card[-8] %}
+                                                                                        <div class="col-sm-2">
+                                                                                            <img  title={{seatNos[-1]}}  class="unavail_sleeping" >
+                                                                                        </div>
+                                                                                        {% else %}
+                                                                                        <div class="col-sm-2">
+                                                                                            <img  title={{seatNos[-1]}} class="avail_sleeping"  >
+                                                                                        </div>
+                                                                                        {% endif %}
+                                                                                    {% else %}
+                                                                                    
+                                                                                    <div class="col-sm-2">
+                                                                                        <img  title={{seatNos[-1]}} class="avail_sleeping"  >
+                                                                                    </div>
+                                                                                    {% endif %}
+                                                                                    {% set __ = seatNos.append(seatNos[-1] + 1) %}
+                                                                                    {% endfor %}
+                                                                                                        
+                                                                                </div><br>
+                                                                                
+        
+                                                                                {% if i == 0%}
+                                                                                <hr>
+                                                                                <div class="row" style="height:10px" >
+                                                                                    
+                                                                                    <div class="col-sm-12">
+                                                                                        <h4 style="text-align: center;">Lower Level</h4>
+                                                                                    </div>
+        
+                                                                                </div>
+                                                                                <hr>
+                                                                                {% endif %}
+                                                                                {% endfor %}
+        
+                                                                            </div>
+                                                                            <div class="col-sm-5">
+                                                                                <div class="row" style="height: 100px;">
+                                
+                                                                                </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-2">
+                                                
+                                                                                        </div>
+                                                
+                                                                                        <div class="col-sm-2">
+                                                                                            <img class="avail_sleeping">
+                                                                                        </div>
+                                                                                        <div class="col-sm-8">
+                                                                                            <h4>:Available</h4>
+                                                                                            </div>
+                                                                                    
+                                                                                    </div>
+                                                                                    
+                                                                                        <div class="row">
+                                                                                                <div class="col-sm-2">
+                                                        
+                                                                                                </div>
+                                                        
+                                                                                                <div class="col-sm-2">
+                                                                                                    <img class="unavail_sleeping">
+                                                                                                </div>
+                                                                                                <div class="col-sm-8">
+                                                                                                    <h4>:Booked</h4>
+                                                                                                    </div>
+                                                                                            
+                                                                                            </div>
+                                                
+                                                                                            </div>
+                                                                                </div>
+                                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                </div>
+                                         </div>
+                                    </div>      
+                                {% endfor %}
+                            </div>
+                    </div>
+        </div>
+
+            
+        </section>
+
+    <script>
+
+        $(".book").click(function(){
+
+            console.log("in book")
+            var id = $(this).attr("name")
+            var card = $("#"+id);
+            var busno = card.find(".busno").text();
+            var source = "{{formdetails.source}}";
+            var dest = "{{formdetails.dest}}";
+            var jdate = "{{formdetails.jdate}}";
+
+            var url = new URL( window.location.origin + "{{url_for('book.render_bookticket')}}");
+            url.searchParams.append('busno',busno);
+            url.searchParams.append('source',source);
+            url.searchParams.append('dest',dest);
+            url.searchParams.append('jdate',jdate);
+            console.log(url);
+            window.location.replace(url);
+
+
+        });
+
+    </script>
+
+    <script>
+
+        $(".seats").click(function(){
+            var card = $(this).attr("name");
+            var extended_card = $("#" + card).find(".bus-extended-card");
+            $(".bus-extended-card").not(extended_card).hide();
+            extended_card.toggle();
+        });
+    </script>
+
+{% endblock %}
+

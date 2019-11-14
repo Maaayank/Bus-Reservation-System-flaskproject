@@ -37,7 +37,7 @@ c.send_keys(phno)
 
 browser.find_element_by_xpath("//input[@id = 'btnSubmit']").click()
 
-time.sleep(2);
+time.sleep(2)
 
 
 browser.switch_to.frame('frmMain1')

@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-7" >
+                <div class="card bg-light text-dark" id="ticket_Area" > 
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img src="asset/images/logo.jpg" style="width: 80px;height: 80px;border:1px solid black;border-radius: 25px;">
+                                </div>
+                                <div class="col-4">
+                                        <h3 style="color: black;padding: 20px;">MSRTC</h3>
+                    
+                                </div>
+                                <div class="col-6">
+                                    <h3 style="color: black;padding: 20px;"><i class="fa fa-ticket"></i> E-Ticket</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <h3 style="color: black"><i class="fa fa-tag"></i> Bus_Id</h3>
+                                </div>
+                                <div class="col-3">
+                                        <h3 style="color: black"><i class="fa fa-bars"></i> Type</h3>
+                                    </div>
+                                    <div class="col-3">
+                                            <h3 style="color: black"><i class="fa fa-male"></i> Adult</h3>
+                                    
+                                        </div>
+                                        <div class="col-3">
+                                                <h3 style="color: black"><i class="fa fa-child"></i> Child</h3>
+                                    
+                                            </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-3">
+                                        <h4 style="color: black">{{tickets[0][4]}}</h4>
+                    
+                                    </div>
+                                    <div class="col-3">
+                                            <h4 style="color: black">{{tickets[0][-3]}}</h4>
+                                        </div>
+                                        <div class="col-3">
+                                                <h4 style="color: black">{{tickets|length}}</h4>
+                                        
+                                            </div>
+                                            <div class="col-3">
+                                                    <h4 style="color: black">0</h4>
+                                        
+                                                </div>
+                                </div><hr>
+                            <div class="row">
+                                    <div class="col-3">
+                                        <h3 style="color: black"><i class="fa fa-bus"></i> Pick_Time</h3>
+                    
+                                    </div>
+                                    <div class="col-3">
+                                            <h3 style="color: black"><i class="fa fa-bus"></i> Source</h3>
+                                        </div>
+                                        <div class="col-3">
+                                                <h3 style="color: black"><i class="fa fa-bus"></i> Drop_Time</h3>
+                                        
+                                            </div>
+                                            <div class="col-3">
+                                                    <h3 style="color: black"><i class="fa fa-bus"></i> Destination</h3>
+                                        
+                                                </div>
+                                </div>
+                                <div class="row">
+                                        <div class="col-3">
+                                            <h4 style="color: black">{{tickets[0][-2]}}</h4>
+                    
+                                        </div>
+                                        <div class="col-3">
+                                                <h4 style="color: black">{{tickets[0][-6]}}</h4>
+                                            </div>
+                                            <div class="col-3">
+                                                    <h4 style="color: black">{{tickets[0][-1]}}</h4>
+                                            
+                                                </div>
+                                                <div class="col-3">
+                                                        <h4 style="color: black">{{tickets[0][-5]}}</h4>
+                                            
+                                                    </div>
+                                    </div><hr>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <h3 style="color: black">Route:</h3>
+                                        </div>
+                                        <div class="col-6">
+                                                <h4 style="color: black">{{tickets[0][-4]}}</h4>
+                                            </div>
+                                    </div>
+                    
+                        </div>
+                        <div class="card-footer">
+                           
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3 style="color: black">Have a Safe Journey</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-4">
+                <div class="card bg-light text-dark" id="trans_Area">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Transaction Sucessful......</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12" style="text-align: center;">
+                                    <h3><b>Transaction Reciept</b></h3>
+        
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                
+                                <div class="col-6">
+                                    <h4>Merchant Name:</h4>
+                                    <h4>Transaction Id:</h4>
+                                    <h4>Date:</h4>
+                                    <h4>Mode of Payment:</h4>
+                                    <h4>Amount :</h4>
+                                    <h4>Pay to:</h4>
+                                    <h4>Gateway:</h4>
+                                </div>
+                                <div class="col-6">
+                                    <h4>{{username}}</h4>
+                                    <h4>{{transaction[0]}}</h4>
+                                    <h4>{{transaction[-1]}}</h4>
+                                    <h4>Online</h4>
+                                    <h4>{{transaction[-2]}}</h4>
+                                    <h4>MSRTC</h4>
+                                    <h4>Axis Bank Service Provider</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-3">
+        
+                                </div>
+                                <div class="col-6" style="text-align: center;">
+                                    <h4 style="color: gray;">.........Powered By.........</h4>
+                                    <h4 style="color: gray;">Paytm</h4>
+                                    
+                                    </div>
+                                    <div class="col-3">
+                                    
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row">
+        <div class="col-12">
+            
+        </div>
+    </div><hr>
+    <div class="row">
+            <div class="col-6" style="text-align: center;">
+                    <button type="button" id="print" style="font-size: 30px;"  class="btn btn-primary"><i class="fa fa-print"></i>E-ticket</button>
+                </div>
+            <div class="col-6" style="text-align: center;">
+                <button type="button" id="print_t" style="font-size: 30px;"  class="btn btn-primary"><i class="fa fa-print"></i>Reciept</button>
+            </div>
+           
+        </div><br>
+
+        <script>
+                $(document).ready(function(){
+                    $("#print").click(function(){
+                       var p1=document.body.innerHTML;
+                       var p2=document.getElementById("ticket_Area").innerHTML;
+                       document.body.innerHTML=p2;
+                       window.print();
+                       document.body.innerHTML=p1;
+                
+                    });
+                    $("#print_t").click(function(){
+                       var p1=document.body.innerHTML;
+                       var p2=document.getElementById("trans_Area").innerHTML;
+                       document.body.innerHTML=p2;
+                       window.print();
+                       document.body.innerHTML=p1;
+                
+                    });
+                });
+                </script>
+
+{% endblock %}

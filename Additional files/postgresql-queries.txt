@@ -64,6 +64,17 @@ create table bus_object(
 	seats_occupied integer[]
 )
 
+create table temp_pass(
+	pass_id serial primary key,
+	bus_id int not null , 
+	pass_name varchar(50) , 
+	seat_no int ,
+	journeyfrm varchar(50) , 
+	journeyTo varchar(50) ,
+	uid int not null
+)
+
+
 PRIMARY KEYS QUERIES :
 
 alter table users add constraint users_pk primary key(uid)
@@ -77,6 +88,8 @@ alter table tickets add constraint tickets_pk primary key(ticket_no);
 
 
 FOREIGN KEY QUERIES :
+
+alter table temp_pass add constraint temp_bus_fk1 foreign key(uid) references users(uid) on delete cascade on update cascade ;
 
 alter table busses add constraint busses_fk1 foreign key(startat) references bus_stops(bs_id) on delete cascade on update cascade ;
 

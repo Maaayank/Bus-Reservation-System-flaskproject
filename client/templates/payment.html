@@ -1,0 +1,153 @@
+
+{% extends 'base.html' %}
+{% block content %}
+    <link rel="stylesheet" href="/styles/style1.css">
+    <script src="/scripts/card.js"></script>
+        
+        <br>
+        <div class="row">
+          <div class="col-100">
+            <div class="container col-75">
+              <form method="POST" action="/pay" class="form-card">
+                <div class="row">
+                  <div class="col-50">
+                    <div class="card-wrapper" style="margin-top: 20px;">
+                    </div>
+                    <label for="cname">Name on Card</label>
+                    <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                    <label for="ccnum">Credit card number</label>
+                    <input type="text" id="ccnum" name="cardnumber" placeholder="•••• •••• •••• ••••">
+                    <div class="row">
+                      <div class="col-50">
+                        <label for="expmonth">Expiry  </label>
+                        <input type="text" id="expiry" name="expiry" placeholder="MM/YYYY">
+                      </div>
+                      <div class="col-50">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" name="cvv" placeholder="•••">
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <button type="button" class="btn btn-dark" onclick="validate()">Confirm to Pay</button>
+                
+              </form>
+            </div>
+          </div>
+          <div class="col-25" style="height: 400px;">
+            <div class="container">
+              <h4>Suggestions <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>Discount</b></span></h4><hr>
+              <p><a href="#">Pay Using ICICI Debit card</a> <span class="price">5%</span></p>
+              <p><a href="#">SBI platinum card</a> <span class="price">15%</span></p>
+              <p><a href="#">Rupay/Visa </a> <span class="price">7%</span></p>
+              <p><a href="#">Axix Credit card</a> <span class="price">5%</span></p>
+              <hr>
+              
+            </div>
+          </div>
+        </div><br>
+
+<script>
+    function validate(){
+
+      // var url = new URL( window.location.origin + "{{url_for('pay.render_payment')}}");
+      // window.location.replace(url);
+
+      var form = $('.form-card');
+      form.submit();
+
+      // var cname=document.getElementById("cname");
+      // var ccnum=document.getElementById("ccnum");
+      // var expmonth=document.getElementById("expmonth");
+      // var expyear=document.getElementById("expyear");
+      // var cvv=document.getElementById("cvv");
+      // var regx=/^[a-zA-z]+$/
+      // var reg=/^([0-9]{4})-([0-9]{4})-([0-9]{4})-([0-9]{4})$/
+      // var rega=/^[0-9]{4}$/
+      // var regcvv=/^[0-9]{3}$/
+      // var date=new Date();
+      // //alert(date.toString());
+      // var st=date.toString();
+      // var dt=st.substring(11,16);
+  
+  
+  
+      // if (cname.value==""||ccnum.value==""||expmonth.value==""||expyear.value==""||cvv.value=="")
+      // {
+      //     alert("fill in the credentials :");
+      // }
+      // else if (!regx.test(cname.value))
+      // {
+      //   alert("enter valid name");
+      // }
+      // else if (!reg.test(ccnum.value))
+      // {
+      //   alert("enter valid card no. :");
+      // }
+      // else if (expmonth.value<1 || expmonth.value>12)
+      // {
+      //   alert("enter valid month :");
+      // }
+      // else if (rega.test(expyear.value)){
+      //   if (expyear.value<parseInt(dt)){
+      //     alert ("enter valid year :");
+      //   }
+      // }
+      // else if(!regcvv.test(cvv.value)){
+      //   alert("enter valid cvv");
+      // }
+      
+    }  
+  </script>
+  <script>
+    $(document).ready(function(){
+      
+      $(".ticket").html(window.localStorage.getItem("seat"));
+      $(".each").html(window.localStorage.getItem("cost"));
+      $(".total").html(window.localStorage.getItem("total"));
+      
+      var flag=0;
+    
+      $("#print").click(function(){
+        if(flag==1){
+          alert("print ticket successfully....");
+        }else{
+          alert("please complete payment procedure");
+        }
+      });
+      localStorage.clear();
+      
+    });
+  </script>
+
+  <script>
+
+    var card = new Card({
+
+      form:'form',
+      container:'.card-wrapper',
+      formSelectors : {
+
+        numberInput : 'input[name="cardnumber"]',
+        expiryInput: 'input[name="expiry"]',
+        cvcInput : 'input[name="cvv"]',
+        nameInput: 'input[name="cardname"]',
+      },
+
+      placeholders: {
+        number: '•••• •••• •••• ••••',
+        name: 'Full Name',
+        expiry: '••/••',
+        cvc: '•••'
+    },
+
+    masks: {
+        cardNumber: '•' // optional - mask card number
+    },
+
+    });
+  </script>
+
+    {% endblock %}
+        

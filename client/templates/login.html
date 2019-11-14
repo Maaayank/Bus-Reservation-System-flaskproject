@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+          <br><br><br>
+          <div  class=" col-4 container">
+            <div class="row">
+              <div  style=" width: 100% ;text-align: center; border-radius: 5px ; padding:25px ; background-color: rgb(14, 158, 194);">
+                  <h1 >Login</h1>
+                  <br>
+                  {% if  msg !=  None%}
+                  <div class="alert">
+                      {{msg}}
+                    </div>
+                  {% endif %}
+                    <br>
+                  <div class="textbox">
+                      <div class="row">
+                          <div class="col-1">
+                              <i class="fa fa-envelope" style="font-size: 30px;"></i>
+    
+                          </div>
+                          <div class="col-9" style="margin-left: 10px;">
+                              <input id="em" type="email" placeholder="Email" class="form-control">
+    
+                          </div>
+                        </div>
+                      
+                    </div><br>
+                    <div class="textbox">
+                        <div class="row">
+                            <div class="col-1">
+                                <i class="fa fa-lock" style="font-size: 30px;"></i>
+      
+                            </div>
+                            <div class="col-9" style="margin-left: 10px;">
+                                <input id="pass" type="password" placeholder="Password" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <br>
+                      <button class="btn btn-primary" onclick="login()" type="button"> Login</button>
+              </div>
+            </div>
+          </div> 
+      
+<script>
+  function login(){
+    var email = document.getElementById("em");
+    var pass = document.getElementById("pass");
+    var reg=/^([a-zA-Z0-9\.\-]+)@([a-zA-Z0-9]+).([a-z]{2,20})$/;
+
+    if(email.value=="" || pass.value==""){
+      alert("Plese fill in the details ")
+    }
+    else if(!reg.test(email.value)){
+      alert("enter valid email");
+    }
+    else{
+
+      const form = document.createElement('form');
+      form.method = 'POST'
+      form.action = '/login'
+
+       var hiddenfeild ;
+
+        hiddenfeild = document.createElement('input');
+        hiddenfeild.type = 'hidden';
+        hiddenfeild.name = 'email';
+        hiddenfeild.value = email.value;
+
+        form.appendChild(hiddenfeild);
+
+        hiddenfeild = document.createElement('input');
+        hiddenfeild.type = 'hidden';
+        hiddenfeild.name = 'password';
+        hiddenfeild.value = pass.value;
+
+        form.appendChild(hiddenfeild);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+  }
+</script>
+
+{% endblock %}
+

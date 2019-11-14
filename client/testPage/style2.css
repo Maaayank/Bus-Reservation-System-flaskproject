@@ -1,0 +1,132 @@
+body{
+    background-color: cornflowerblue !important;
+}
+
+.card{
+    padding: 10px;
+    border-radius: 10px; 
+    border: 2px solid black;
+    box-shadow: 2px 1px azure;
+}
+
+.bus-card{
+    padding: 10px;
+    background-color: azure;
+    border-radius: 2px;
+    box-shadow: 2 rgb(99, 89, 89);
+    overflow: hidden;
+}
+
+.bus-extended-card{
+    padding:10px;
+    background-color: cornsilk;
+    border-top: 5px solid blue;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin-bottom:10px;
+    overflow: hidden;
+}
+
+.bus-card:hover{
+    transform:scale(1.005)
+}
+
+.header{
+    position: relative;
+    background-color: aqua;
+    margin: 10px;
+    overflow: hidden;
+} 
+
+.stickynav{
+    margin: 10px;
+    position:sticky;
+    top: 10px;
+    padding-left: 5px;
+    padding-right: 5px ;
+    overflow: hidden;
+    background-color: rgb(144, 15, 250);
+    z-index: 10;
+}
+
+.stickynav a{
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.sectionSpace{
+    background-color: darkgray;
+}
+
+@media (min-width:600px){
+        .sectionSpaceForm{
+        float: left;
+        width: 30%;
+    }
+}
+
+@media (max-width:601px){
+    .sectionSpaceForm{
+        float: left;
+        width: 100%;
+    }
+}
+
+.sectionSpaceForm #form{
+    margin-left: 25px;
+    margin-top: 10px;
+    padding:30px;
+	width: 90%;
+	height:auto;
+	background-color: rgb(61, 162, 245);
+}
+
+.slideShow{
+    height: 600px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.hvr:hover{
+    transform:scale(1.02)
+   }
+
+.offers{
+    background-color: blanchedalmond;
+}
+
+@media (max-width:801px){
+    .searchResultsSection{
+        float: left;
+        width: 100%;
+    }
+}
+
+@media (min-width:800px){
+    .searchResultsSection{
+        float: left;
+        width:70%
+    }
+}
+
+
+footer {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

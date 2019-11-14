@@ -8,12 +8,11 @@
       document.getElementsByName("dest").value = {{formdetails.dest}};
       document.getElementsByName("bus_class").value = {{formdetails.bus_class}};
       document.getElementsByName("jdate").value = {{formdetails.jdate}};
-      {% endif %}
+  {% endif %}
 </script>
 
 <script>
   var stops = JSON.parse({{stops | tojson | safe}});
-  console.log(stops)
 </script>
 
 <script>
@@ -21,19 +20,25 @@
   $(document).ready(function(){
 
       $("#source").autocomplete({
-          source: stops
-
+          source: function(request,response){
+            var result = $.ui.autocomplete.filter(stops,request.term);
+            response(result.slice(0,10));
+          }
       });
 
       $("#dest").autocomplete({
-          source: stops
-      })
-  })
+            source: function(request,response){
+            var result = $.ui.autocomplete.filter(stops,request.term);
+            response(result.slice(0,10));
+          }
+  });
+
+  });
 </script>
 
 <section>
     <section style="width: 40% ;height: auto; float: left;">
-        <div id=form>
+        <div id ="form">
             <form autocomplete="off" action="/searchbus/" method="POST">
 
             <div class="form-group">
@@ -104,9 +109,9 @@
             <div style="width: 100% ; float: left; height: 33%;">
               <div class="col-sm-5">{{card[5]}}</div>
               <div class="col-sm-2">seats : </div>
-              <div class="col-sm-2">{{card[11]}}</div>
+              <div class="col-sm-2">{{card[6]}}</div>
               <div class="col-sm-2">available : </div>
-              <div class="col-sm-1">{{card[11] -  card[16]|length  if card[16]!= None else card[11] }}</div>
+              <div class="col-sm-1">{{card[6] -  card[9]|length  if card[9]!= None else card[6] }}</div>
             </div>
           </div>
         </div>

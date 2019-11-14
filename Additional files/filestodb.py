@@ -10,7 +10,7 @@ details = []
 
 bus_no = 0
 
-lines = sd.readlines();
+lines = sd.readlines()
 i =0
 while i < len(lines) :
 	line = lines[i]
