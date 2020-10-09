@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+</head>
+<body>
+      
+    <script>
+        var stops = JSON.parse({{stops | tojson | safe}});
+
+        $(document).ready(function(){
+
+            $("#source").autocomplete({
+                source: function(request,response){
+                var result = $.ui.autocomplete.filter(stops,request.term);
+                response(result.slice(0,10));
+                }
+            });
+
+            $("#dest").autocomplete({
+                source: function(request,response){
+                var result = $.ui.autocomplete.filter(stops,request.term);
+                response(result.slice(0,10));
+                }
+            });
+
+        });
+    </script>
+    <div class=" card header">
+        <img src="logo.jpg" alt="MSRTC" style="height:100px ; border-radius: 5px ; position:relative ; float: left;"/>
+        <div style="margin-left: 25px; float: left;">
+            <h1 style="color: rgb(0, 0, 0) ;">MSRTC</h1>
+            <h4>MAHARASHTRA STATE TRANSPORT BUS RESERVATION SYSTEM</h4>
+        </div>
+    </div>
+    <div class="card stickynav">
+        <div class ="navs" style="float: left;">
+            <a href="#home">Home</a>
+            <a href="#searchbus">Searh Bus</a>
+            <a href="#livestatus">Live Status</a>
+            <a href="#contactus">Contact Us</a>
+        </div>
+        <div class="navs" style=" float: right;">
+            <a href="#login">Login</a>
+            <a href="signup">Sign Up</a>
+        </div>
+    </div>
+
+    <section  style="overflow: hidden; width: 100%;">
+        <div class="sectionSpaceForm">
+                <div class="card " id="form">
+                <form autocomplete="off" action="/searchbus/" method="POST">
+                
+                <div class="form-group">
+                <label class="control-label" for="source">Source :</label>
+                <input type="text" id="source" name="source" class="form-control" placeholder="Enter Source ">
+                </div>
+                
+                <div class="form-group">
+                <label class="control-label" for="dest">Destination :</label>
+                <input type="text" id="dest" name="dest" class="form-control" placeholder="Enter Destination">
+                </div>
+                
+                <label for dropdown>Class :</label>
+                <select name = "bus_class">
+                <option value="SS">SEMI SLEEPER LUXURY</option>
+                <option value="AS">AC SHIVNERI</option>
+                <option value="OD">ORDINARY EXPRESS</option>
+                <option value="ON">ORDINARY NIGHT</option>
+                <option value="DO">DAY ORDINARY</option>
+                <option value="SR">SLEEPER REGULAR</option>
+                <option value="SL">SEMI LUXURY</option>
+                <option value="ANY" selected="selected">ANY</option>
+                </select>
+                <br>
+                <br>
+                <div class="form-group">
+                <label class="control-label" for="jdate">Enter Journey Date :</label>
+                <input type="date" name="jdate" class="form-control" placeholder="EnterJourney Date">
+                </div>
+                <br>
+                <input type="submit" name="submit" class="btn" style="background-color: rgb(78, 189, 253) ; border :2px solid rgb(245, 245, 245)">
+                </form>
+                </div>
+            </div>
+
+            <div class="searchResultsSection">
+                    <div class="col-sm-12" >
+
+                        {% for card in results %}
+                            <div class="row busses" id={{card[0]}}>
+                                <div class="col-sm-12">
+                                        <div class="bus-card bg-light text-black-50">
+                                                <div class="card-header"  >
+                                                    <div class="row">
+                                                        
+                                                        <div class="col-sm-2">
+                                                                <i class="material-icons">toc</i><h4>Bus_no.</h4>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                                <i class="material-icons">location_on</i><h4>Source</h4>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                    <i class="material-icons">location_on</i><h4>Destination</h4>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                        <span class="glyphicon glyphicon-time"></span><h4>Duration</h4>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                            <span class="glyphicon glyphicon-time"></span><h4>Time</h4>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <i class="material-icons">star</i><h4>Rating</h4>   
+                                                                            
+                                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                    
+                                                        <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <h4 class="busno">{{card[0]}}</h4>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                        <h4 class="source">{{formdetails.source}}</h4>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                            <h4 class="desti">{{formdetails.dest}}</h4>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                                <h4><span class="hrs">{{card[-3]}}</span>h <span class="min">{{card[-2]}}</span>m</h4>
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                    <h4>{{card[-1]}}</h4>
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                        <h4>{{card[-1]}}</h4>
+                                                                                    </div>
+                                                            </div> <hr>
+                                                            <div class="row">
+                                                                    <div class="col-sm-1">
+                                                                        <h4>Route : </h4>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                         <h4 id="check1">{{card[4]}}</h4>
+                                                                     </div>
+                                                                     <div class="col-sm-2">
+                                                                            <h4>{{card[3]}}</h4>
+                                                                        </div>
+                                                                     <div class="col-sm-1">
+                                                                         <h4>Date:</h4>
+                                         
+                                                                     </div>
+                                                                     <div class="col-sm-2">
+                                                                             <h4 class="tme">{{card[4]}}</h4>
+                                                                         </div>
+
+                                                                    <div class="col-sm-1">
+                                                                            <h4>Fare : </h4>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                            <h4 class="price">{{card[-1]}}</h4>
+                                                                    </div>
+                                                                </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="row">
+                                                        <div class="col-sm-2">
+                                                            <h4>Services:</h4>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                                <a href="" ><span class="fa fa-wifi" style="font-size: 36px;color: black;" title="WIFI available"></span></a>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                    <a href="" ><span class="glyphicon glyphicon-facetime-video" style="font-size: 36px;color: black;" title="DVD coach"></span></a>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                        <a href=""><i class="material-icons" style="font-size: 36px;color: black;">exit_to_app</i></a>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                            <a href=""><i class="material-icons" style="font-size: 36px;color: black;">near_me</i></a>
+                                                                        </div>
+                                                                        <div class="col-sm-4"></div>
+                                
+                                                        <div class="col-sm-2 seats" name={{card[0]}}  style="background-color: rgb(255, 2, 2);border: 2px solid black;">
+                                                            <h3>Seats</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% if not sleeping %}
+                            <div class="bus-extended-card bg-light text-black-50 seating" style="display: none;">
+                                <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h4>Seats:24</h4>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                    <h4>Available:<span id="ava"></span></h4>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            
+                                            <div class="col-sm-1" style="border-right: 1px solid black;">
+                                                    <img src="asset/images/driver.JPG" style="height:36px;">
+                
+                                                </div>
+                                                <div class="col-sm-6" style="border-right: 1px solid black;">
+                                                    <div class="row" style="border-top:1px solid black;">
+
+                                                        {% for _ in range(6)%}
+                                                        <div class="col-sm-2">
+                                                            <img src="asset/images/ava.gif" title="Rs.350/-"   >
+                                                        </div>
+                                                        {% endfor%}
+                                                                            
+                                                    </div>
+                                                    <div class="row">
+
+                                                        {% for i in range(6) %}
+                                                        <div class="col-sm-2">
+                                                            <img src="asset/images/ava.gif" title="Rs.350/-"   >
+                                                        </div>
+                                                        {%  endfor %}
+                                                                                
+                                                        </div>
+                                                    <div class="row" style="height: 50px;border-bottom:1px solid black;border-top:1px solid black; ">
+                
+                                                    </div>
+                                                    <div class="row">
+
+                                                        {% for i in range()%}
+                                                        <div class="col-sm-2">
+                                                            <img src="asset/images/ava.gif" title="Rs.350/-"   >
+                                                        </div>
+                                                        {% endfor %}
+                                                                                
+                                                        </div>
+                                                        <div class="row" style="border-bottom:1px solid black;">
+
+                                                            {% for i in range(6) %}
+                                                            <div class="col-sm-2">
+                                                                <img src="asset/images/ava.gif" title="Rs.350/-"   >
+                                                            </div>
+                                                            {% endfor %}
+                                                                                    
+                                                            </div>
+                                                    
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="row">
+                                                        <div class="col-sm-2">
+                
+                                                        </div>
+                
+                                                        <div class="col-sm-1">
+                                                            <img src="asset/images/ava.gif">
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                                <h4>:Available</h4>
+                                                            </div>
+                                                        
+                                                    </div>
+                                                    
+                                                        <div class="row">
+                                                                <div class="col-sm-2">
+                        
+                                                                </div>
+                        
+                                                                <div class="col-sm-1">
+                                                                    <img src="asset/images/book.gif">
+                                                                </div>
+                                                                <div class="col-sm-9">
+                                                                        <h4>:Booked</h4>
+                                                                    </div>
+                                                                
+                                                            </div>
+                
+                                                </div>
+                                        </div>
+                                        
+                                    </div>
+                            </div>
+                            {% else}
+
+                            <div class="bus-extended-card bg-light text-black-50 sleeping" style="display: none;"  >
+    
+                                <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h4>Seats:36</h4>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                    <h4>Available:<span id="ava1"></span></h4>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-1" style="border-right: 1px solid black;">
+                                                    <img src="asset/images/driver.JPG" style="height:36px; margin-top: 70px;">
+                
+                                                </div>
+                                                <div class="col-sm-6">
+    
+                                                    <div class="row" >
+                                                        
+                                                        <div class="col-sm-12">
+                                                            <h4 style="text-align: center;">Upper Level</h4>
+                                                        </div>
+    
+                                                    </div><hr>
+                                                    <div class="row">
+                                                        {% for _ in range(6) %}
+                                                            <div class="col-sm-2">
+                                                                <img src="asset/images/avail.JPG" title="Rs.750/-" >
+                                                            </div>
+                                                        {% endfor %} 
+        
+                                                        </div>
+                                                        <div class="row">
+                                                            {% for _ in range(6) %}
+                                                                <div class="col-sm-2">
+                                                                    <img src="asset/images/avail.JPG" title="Rs.750/-" >
+                                                                </div>
+                                                                {% endfor %}
+            
+                                                            </div>
+                                                    <div class="row" style="height: 15px;">
+    
+                                                    </div>
+                                                
+                                                    <div class="row">
+                                                        {% for _ in range(6) %}
+                                                            <div class="col-sm-2">
+                                                                <img src="asset/images/avail.JPG" title="Rs.750/-" >
+                                                            </div>
+                                                            { %endfor %}
+        
+                                                        </div><hr>
+                                                            <div class="row" style="height:10px" >
+                                                        
+                                                                    <div class="col-sm-12">
+                                                                        <h4 style="text-align: center;">Lower Level</h4>
+                                                                    </div>
+            
+                                                            </div><hr>
+                                                            <div class="row">
+                                                                {% for _ in rsnge(6) %}
+                                                                    <div class="col-sm-2">
+                                                                        <img src="asset/images/avail.JPG" title="Rs.750/-" >
+                                                                    </div>
+                                                                    {% endfor %}
+                
+                                                                </div>
+                                                                <div class="row">
+                                                                    {% for _ in range(6) %}
+                                                                        <div class="col-sm-2">
+                                                                            <img src="asset/images/avail.JPG" title="Rs.750/-" >
+                                                                        </div>
+                                                                        {% endfor %}
+                    
+                                                                    </div>
+                                                            <div class="row" style="height: 15px;">
+            
+                                                            </div>
+                                                            
+                                                            <div class="row">
+                                                                {% for _ in range(6) %}
+                                                                    <div class="col-sm-2">
+                                                                        <img src="asset/images/avail.JPG" title="Rs.750/-" >
+                                                                    </div>
+                                                                    {% endfor %}
+                
+                                                                </div>
+            
+    
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="row" style="height: 100px;">
+    
+                                                    </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2">
+                    
+                                                            </div>
+                    
+                                                            <div class="col-sm-2">
+                                                                <img src="asset/images/avail.JPG">
+                                                            </div>
+                                                            <div class="col-sm-8">
+                                                                <h4>:Available</h4>
+                                                                </div>
+                                                        
+                                                        </div>
+                                                        
+                                                            <div class="row">
+                                                                    <div class="col-sm-2">
+                            
+                                                                    </div>
+                            
+                                                                    <div class="col-sm-2">
+                                                                        <img src="asset/images/unavail.JPG">
+                                                                    </div>
+                                                                    <div class="col-sm-8">
+                                                                        <h4>:Booked</h4>
+                                                                        </div>
+                                                                
+                                                                </div>
+                    
+                                                                </div>
+                                                      </div>
+                                                  </div>
+                            </div>
+                            {% endif %}
+                            </div>
+                                 </div>
+                                </div>      
+                        {% endfor %}
+                    </div>
+                    <div class= " col-sm-12" style="text-align: center; font-family: 'Times New Roman', Times, serif;">
+                        {{msg}}
+                    </div>
+                    
+            </div>
+            
+        </section>
+
+    <script>
+
+        // $(".busses").click(function(){
+        //     var ele = $(this).find(".bus-extended-card");
+
+        //     if( ele.css("display") == "none"){
+        //         ele.css("display","block");
+        //     }
+        //     else{
+        //         var busno = $(this).find(".busno").text();
+        //         // var from = {{formdetails.source}};
+        //         // var dest = {{formdetails.dest}};
+
+        //         $.post('/bookticket',{busno:busno,from:from,dest:dest});
+        //     }
+        // });
+
+        $(".seats").click(function(){
+            var card = $(this).attr("name");
+            $("#" + card).find(".bus-extended-card").toggle();
+        });
+    </script>
+
+</body>
+</html>
+

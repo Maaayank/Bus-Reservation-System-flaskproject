@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<script>
+    var stops = JSON.parse({{stops | tojson | safe}});
+    console.log(stops)
+
+    $(document).ready(function(){
+
+        $("#source").autocomplete({
+            maxResults:10,
+             source: function(request, response) {
+            var results = $.ui.autocomplete.filter(stops, request.term);
+            response(results.slice(0, this.options.maxResults));
+    }
+
+        });
+
+        $("#dest").autocomplete({
+            maxResults:10,
+            source: function(request, response) {
+            var results = $.ui.autocomplete.filter(stops, request.term);
+            response(results.slice(0, this.options.maxResults));
+            }
+        })
+
+        $('#datee').datepicker({ dateFormat: 'dd-mm-yy' });
+
+        $('.hover').hover(function() {
+        $(".hover").addClass('transition');
+    
+    }, function() {
+        $(".hover").removeClass('transition');
+    });
+    $('.hover1').hover(function() {
+        $(".hover1").addClass('transition');
+    
+    }, function() {
+        $(".hover1").removeClass('transition');
+    });
+    })
+</script>
+
+<br>
+<section >
+
+        {% if  msg !=  None%}
+        <div class= " alert" style="position: absolute; text-align: center; top: 1% ; right: 1%; width:10%; font-family: Arial, Helvetica, sans-serif; font:larger">
+                {{msg}}
+        </div>
+        {% endif %}
+    <div class="container-fluid">
+
+        <div class="row">
+                <div class="col-3" style="padding:10px;" >
+                    <form autocomplete="off" action="/searchbus/" method="POST"  style="width: 100%; height: 400px; background-color: rgb(7, 178, 221); padding: 10px; border-radius: 2px;">
+                    <div class="col-12" style="text-align: justify; font-size: x-large; margin: 10px; ">SEARCH BUS</div>
+                    <div class="form-group col-12">
+                            <label class="control-label"  style =" font:medium" for="source">Source :</label>
+                            <input type="text" id="source" name="source" class="form-control" placeholder="Enter Source">
+                            </div>
+                            <div class="form-group col-12">
+                                    <label class="control-label" style =" font:medium" for="dest">Destination :</label>
+                                    <input type="text" id="dest" name="dest" class="form-control" placeholder="Enter Destination">
+                                    </div>
+                                    <div class="col-12">
+                                            <label style =" font:medium" for dropdown>Class :</label>
+                                            <select name = "bus_class" class="form-control">
+                                            <option value="SS">SEMI SLEEPER LUXURY</option>
+                                            <option value="AS">AC SHIVNERI</option>
+                                            <option value="OD">ORDINARY EXPRESS</option>
+                                            <option value="ON">ORDINARY NIGHT</option>
+                                            <option value="DO">DAY ORDINARY</option>
+                                            <option value="SR">SLEEPER REGULAR</option>
+                                            <option value="SL">SEMI LUXURY</option>
+                                            <option value="ANY" selected="selected">ANY</option>
+                                            </select>
+                                    </div><br>
+                                    <div class="form-group col-12">
+                                            <label style =" font:medium"  class="control-label" for="jdate">Enter Journey Date :</label>
+                                            <input type="text" id="datee" name="jdate" class="form-control" placeholder="EnterJourney Date">
+                                            </div>
+                                    <input type="submit" name="submit" class="btn " style="background-color: rgb(119, 209, 245) ; margin-right: 25px; padding-left: 20px; float: right;">
+                    </form>
+                </div>
+                <div class="col-9">    
+                    <div class="container" style="padding:10px">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                            </ol>
+                        
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" >
+                        
+                                <div class="item active">
+                                <img src="/assets/bus1car.jpg" alt="Bus" style="width:95%;height:400px;">
+                                <div class="carousel-caption">
+                                    
+                                </div>
+                                </div>
+                        
+                                <div class="item">
+                                <img src="/assets/bus2car.png" alt="Chicago" style="width:95%;height:400px;">
+                                <div class="carousel-caption">
+                                    
+                                </div>
+                                </div>
+                            
+                                <div class="item">
+                                <img src="/assets/bus3car.png" alt="New York" style="width:95%;height:400px;">
+                                <div class="carousel-caption">
+                                    
+                                </div>
+                                </div>
+                            
+                            </div>
+                        
+                            <!-- Left and right controls -->
+                            
+                            </div>
+
+
+                    </div>
+                </div>
+
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid col-12">
+        <div class="row">
+            <div class="col-4">
+                    <img src="/assets/busoff.jpg" style="width:400px;height:300px;" class="hover">
+            </div>
+            <div class="col-8">
+                <br>
+                    <h2>Terms & Conditions:</h2>
+                    <br>
+                    <ul>
+                            <li>Use coupon code: FIRSTBUS</li>
+                            <li>Get flat 15% off up to Rs. 110 off on your first bus booking with RailYatri</li>
+                            <li>>Validity till 31st December 2019.</li>
+                            <li>Minimum base fare of Rs 500 is required to apply the code.</li>
+                            <li>RailYatri has the sole discretion to discontinue the offers at any given time</li>
+                    </ul>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+                <div class="col-4">
+                        <img src="/assets/busoff2.jpg" style="width:400px;height:300px;" class="hover1">
+                </div>
+                <div class="col-8">
+                    <ul>
+                            <h2> The SmartBus Promise</h2>
+
+                           <li>On-Time Performance</li>
+                           <li>Safe & Secure Journeys</li>
+                           <li>Personalised Assistance</li> 
+                           <li>Features You Will Love</li> 
+                    </ul>
+                       
+                </div>
+            </div>
+    </div>
+    
+    <!-- <div id=form>
+    
+    
+    <div class="form-group">
+    <label class="control-label" for="source">Source :</label>
+    <input type="text" id="source" name="source" class="form-control" placeholder="Enter Source ">
+    </div>
+    
+    <div class="form-group">
+    <label class="control-label" for="dest">Destination :</label>
+    <input type="text" id="dest" name="dest" class="form-control" placeholder="Enter Destination">
+    </div> -->
+    
+    
+   
+    <!-- <br>
+    <br>
+   
+    <br>
+   
+    </div> -->
+</section>
+<script>
+ 
+</script>
+
+{% endblock %}

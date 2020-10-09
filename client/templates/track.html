@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+
+	<!-- <link href="asset/style1.css" rel="stylesheet" > -->
+	<link href="asset/css/bootstrap.min.css" rel="stylesheet" >
+	<link rel="stylesheet" href="asset/js/jui/jquery-ui.css">
+	<link rel="stylesheet" href="asset/js/jui/jquery-ui.structure.css">
+    <link rel="stylesheet" href="asset/js/jui/jquery-ui.theme.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+
+	
+	<script src="asset/js/jquery.js"></script>
+	<script src="asset/js/jui/jquery-ui.js"></script>
+	<script src="asset/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <style>
+    .head{
+      height: 200px;
+      border: 2px solid black;
+      background-color: skyblue;
+  }
+  #img1:hover{
+   transform: scale(1.5);
+  }
+  #img2{
+      background-repeat: no-repeat;
+      width:100%;
+      height: 400px;
+  }
+  #stl{
+      position: absolute;
+      transform: translateY(-50%);
+      text-align: center;
+      letter-spacing: 0.2em;
+      margin-top: 30px;
+      
+  }
+  #stl span{
+      display: inline-block;
+      animation: animate 1s linear forwards;
+  }
+  @keyframes animate{
+      0%{
+          opacity: 0;
+          transform: rotateY(90deg);
+          filter: blur(10px);
+      }
+      100%{
+          opacity: 1;
+          transform: rotateY(0deg);
+          filter: blur(0);
+      }
+  }
+  #stl span:nth-child(1){
+      animation-delay: 1s;
+  }
+  #stl span:nth-child(2){
+      animation-delay: 1s;
+  }
+  #stl span:nth-child(3){
+      animation-delay: 1s;
+  }
+  #stl span:nth-child(4){
+      animation-delay: 1s;
+  }
+  #stl span:nth-child(5){
+      animation-delay: 1s;
+  }
+  </style>
+  <script>
+  $(document).ready(function(){
+	var date=new Date();
+	var st=date.toString();
+	var m=st.indexOf(":");
+	var n=st.substring(m-2,m+6);
+	var sent=" bus is at this location";
+	var m,i,arr;
+	arr=["https://www.google.co.in/maps/place/Yashwantrao+Chavan+Garden/@18.5246036,73.7929269,12z/data=!4m5!3m4!1s0x3bc2c01acd68e3a7:0x9b38be960faab409!8m2!3d18.4929589!4d73.8537884","https://www.google.co.in/maps/place/BUS+DEPOT/@23.0133698,72.56246,17z/data=!3m1!4b1!4m5!3m4!1s0x395e85973f6082d3:0x4e2e1cf5b1a2fd9a!8m2!3d23.0133698!4d72.5646487","https://www.google.co.in/maps/place/Amritsar/@31.1403129,74.5793706,8z/data=!4m8!1m2!2m1!1spunjab+bus+depot!3m4!1s0x39196352cf6525f5:0x3f4411fa6a476a27!8m2!3d31.6300152!4d74.8838015","https://www.google.co.in/maps/place/M+P+S+R+T+C+Bus+Depot/@23.2287255,72.9062723,6z/data=!4m8!1m2!2m1!1smadya+pradesh+bus+depot!3m4!1s0x397c42b7e5d2adbd:0x78f268b3e3054249!8m2!3d23.2287255!4d77.3886942"];
+	$("#bbn").click(function(){
+	var first=$("#busno").val();
+	if(first==="ma")
+	{window.open(""+arr[0],"_blank");
+	$("#busno").val('');
+	$("#para").html(n+sent);
+	}
+	else if(first=="gj")
+	{window.open(arr[1],"_blank");
+	$("#busno").val('');
+	$("#para").html(n+sent);
+	}
+	else if(first=="pb")
+	{window.open(arr[2],"_blank");
+	$("#busno").val('');
+	$("#para").html(n+sent);
+	}
+	else if(first=="mp")
+	{window.open(arr[3],"_blank");
+	$("#busno").val('');
+	$("#para").html(n+sent);
+	}
+	else{
+		alert("invalid bus no.");
+	}
+	});
+	});
+	</script>
+	
+</head>
+<body>
+    <div class="container-fluid head" style="background-color: skyblue;">
+        <div class="row">
+            <div class="col-sm-5">
+                <img src="asset/images/logo.jpg" style="height: 160px;padding: 18px 20px; border-radius: 50px; ">
+           
+           
+                <h3 style="display: inline;"><i>MSRCTC Welcomes you </i></h3>
+            </div>
+            <div class="col-sm-5">
+                <h3 id="stl">
+                    <span>M</span>
+                    <span>S</span>
+                    <span>R</span>
+                    <span>T</span>
+                    <span>C</span>
+                </h3>
+
+            </div>
+            <div class="col-sm-2">
+                <h3><i class="fas fa-home"></i> Reach Us: </h3>
+                <h4>-A/001,Kalbo Villa,
+                    Gandhi road,Fort-MUmbai.
+                </h4>
+                <label>Search post:<br><input type="Search" placeholder="Search.."><button type="submit"><i class="fa fa-search"></i></button></label>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+           
+        <div class="row" >
+            <div class="col-sm-1">
+                <h3 style="padding: 10px;"><i class="glyphicon glyphicon-home"></i><a href="index.html"> Home</a></h3>
+            </div>
+            <div class="col-sm-2">
+                    <h3 style="padding: 10px;"><i class="fa fa-map-marker"></i><a href="#"> Live-Status</a></h3>
+                </div>
+                <div class="col-sm-2">
+                        <h3 style="padding: 10px;"><i class="fa fa-info-circle"></i><a href="#"> Disclaimer</a></h3>
+                    </div>
+                    <div class="col-sm-5">
+
+                    </div>
+                    <div class="col-sm-1.5"><h3 style="padding: 10px;"><i class="glyphicon glyphicon-log-in" style="color: skyblue;"></i><a href="#"> SignUp</a></h3></div>
+                    <div class="col-sm-0.5"><h3 style="padding: 10px;"><i class="glyphicon glyphicon-log-in" style="color: skyblue;"></i><a href="#"> Login</a></h3></div>
+        </div>
+
+    </div>
+    
+    <section style="background-image: url(asset/images/land2.jpg);background-size: 100%;">
+        <div class="container-fluid" style="height: 700px;">
+            <div class="row">
+                <div class="col-sm-4">
+
+                </div>
+                <div class="col-sm-4">
+                   <div  style="border: 2px solid black;margin-top: 20%;background-color: white;"> 
+                    <h3 style="text-align: center;color: black;">Current Location of bus</h3><hr>
+                    <input type="text" class="form-control" placeholder="enter the Bus id" id="busno"><br>
+                    <button type="button" class="btn btn-success" style="margin-left: 40%;font-size: 20px;" id="bbn">search</button><br>
+                    <p id="para"></p><br>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    
+                </div>
+            </div>
+
+        </div>
+</section>
+<div class="container-fluid" style="background-color: black; ">
+    <div class="row">
+        <div class="col-sm-0.5">
+            <h3 style="color: white;margin-top: 20px;">Join Us:</h3>
+        </div>
+        <div class="col-sm-0.5"></div>
+       
+        <div class="col-sm-1">
+            <a href="" class="fa fa-facebook"><h3 style="color: white;margin-top: 20px;"> Facebook</h3></a>
+        </div>
+        <div class="col-sm-1">
+            <a href="" class="fa fa-twitter"><h3 style="color: white;margin-top: 20px;"> Twitter</h3></a>
+        </div>
+        <div class="col-sm-1">
+            <a href="" class="fa fa-linkedin"><h3 style="color: white;margin-top: 20px;"> LinkedIn</h3></a>
+        </div>
+        
+        <div class="col-sm-1.5">
+
+        </div>
+        <div class="col-sm-2">
+            <h3 style="color: white;margin-top: 20px;"><i class='fas fa-shuttle-van'>Have a Safe Journey--></i></h3>
+        </div>
+        <div class="col-sm-1.5">
+            <img src="asset/images/logo1.jpg" style="height: 100px;" alt="">
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+            <a href=""><h3 style="color: white;margin-top: 20px;">Subscribe to Our Newletter</h3></a>
+        </div>
+    </div>
+</div>
+  
+</body>
+</html>

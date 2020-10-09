@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<br><br><br>
+<div class="col-4 container" >
+  <div class="row">
+    <div style=" width: 100% ;text-align: center; border-radius: 5px ; padding:25px ; background-color: rgb(14, 158, 194);">
+        <h2>SIGN UP</h1>
+          <br>
+          {% if  msg !=  None%}
+          <div class="alert">
+              {{msg}}
+            </div>
+          {% endif %}
+            <br>
+
+          <div class="alert" style="background-color: rgb(161, 189, 248);">
+
+            </div>
+            <br>
+<div class="textbox row">
+          <div class="col-1">
+              <i class="fa fa-user" style="font-size: 30px;"></i>
+
+          </div>
+          <div class = "col-1"></div>
+          <div class="col-10">
+              <input id="uname" type="text" placeholder="Username" class="form-control">
+            
+            </div>
+            
+    </div>
+    <br>
+    <div class="textbox row">
+        <div class="col-1">
+            <i class="fa fa-envelope" style="font-size: 30px;"></i>
+
+        </div>
+        <div class = "col-1"></div>
+        <div class="col-10">
+            <input id="mail" type="email" placeholder="Email" class="form-control">
+          
+          </div>
+          
+  </div>
+  <br>
+  <div class="textbox row">
+      <div class="col-1">
+          <i class="fa fa-phone" style="font-size: 30px;"></i>
+
+      </div>
+      <div class = "col-1"></div>
+      <div class="col-10">
+          <input id="p_no" type="number" placeholder="Phone Number" class="form-control">
+        
+        </div>
+        
+</div>
+<br>
+<div class="textbox row">
+    <div class="col-1">
+        <i class="fa fa-lock" style="font-size: 30px;"></i>
+
+    </div>
+    <div class = "col-1"></div>
+    <div class="col-10">
+        <input id="pass"type="password" placeholder="Password" class="form-control">
+      
+      </div>
+      
+</div>
+<br>
+<div class="textbox row">
+  <div class="col-1">
+      <i class="fa fa-lock" style="font-size: 30px;"></i>
+
+  </div>
+  <div class = "col-1"></div>
+  <div class="col-10">
+      <input id="c_pass"type="password" placeholder="Confirm Password" class="form-control">
+    
+    </div>
+    
+</div>
+<br>
+<br>
+<div class="row">
+<div class = "col-2">
+</div>
+<input class="btn btn-danger col-8"  onclick="validateandSubmit()" type="button" value="Sign Up">
+</div>
+  </div>
+  </div>  
+</div>
+
+    
+    
+<script>
+  function validateandSubmit()
+  {
+    var user_name=document.getElementById("uname");
+    var phonenum=document.getElementById("p_no");
+    var e_mail=document.getElementById("mail");
+    var pw=document.getElementById("pass");
+    var c_pw=document.getElementById("c_pass");
+    var regx=/^[7-9]\d{9}$/;
+    var reg=/^([a-zA-Z0-9\.\-]+)@([a-zA-Z0-9]+).([a-z]{2,20})$/;
+
+    var alert = $('.alert')
+
+    if (user_name.value==""||phonenum.value==""||e_mail.value==""||pw.value==""||c_pw.value=="")
+    {
+      alert.text("please fill in the details :");
+    }
+    else if(!reg.test(e_mail.value))
+    {
+      alert.text("enter valid email :");
+    }
+    else if (!regx.test(phonenum.value))
+    {
+      alert.text("enter valid phone number :");
+    }
+    else if (pw.value!=c_pw.value)
+    {
+      $('.alert').text("passwords does not matched");
+    }
+    else{
+      const form = document.createElement('form');
+      form.method = 'POST'
+      form.action = '/signup'
+
+        var hiddenfeild = document.createElement('input');
+        hiddenfeild.type = 'hidden';
+        hiddenfeild.name = 'username';
+        hiddenfeild.value = user_name.value;
+
+        form.appendChild(hiddenfeild);
+
+        hiddenfeild = document.createElement('input');
+        hiddenfeild.type = 'hidden';
+        hiddenfeild.name = 'email';
+        hiddenfeild.value = e_mail.value;
+
+        form.appendChild(hiddenfeild);
+
+        hiddenfeild = document.createElement('input');
+        hiddenfeild.type = 'hidden';
+        hiddenfeild.name = 'phno';
+        hiddenfeild.value = phonenum.value;
+
+        form.appendChild(hiddenfeild);
+
+        hiddenfeild = document.createElement('input');
+        hiddenfeild.type = 'hidden';
+        hiddenfeild.name = 'password';
+        hiddenfeild.value = pw.value;
+
+        form.appendChild(hiddenfeild);
+
+        document.body.appendChild(form);
+        form.submit();
+
+    }
+
+  }
+</script>
+
+
+{% endblock %}

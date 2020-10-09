@@ -1,0 +1,602 @@
+
+
+
+    {% extends "base.html" %}
+    {% block content %}
+
+    <style>
+      .pass_card{
+          border:2px solid black;
+          border-radius: 25px;
+      
+      }
+      </style>
+
+    {% set seatNos = [0] %}
+
+
+    <section style="width: 100%; overflow: hidden;">
+        <div class="card-body" style="width:55% ; float: left ; margin: 40x;">
+            {% if card[2]=='ORDINARY EXPRESS' or card[2] == 'SEMI LUXURY' or card[2] == 'DAY ORDINARY' %}
+              <div class="bus-extended-card  text-black-50 seating" >
+              <div class="card-header">
+                      <div class="row">
+                          <div class="col-sm-6">
+                              <h4 id='noofseats'>Seats:24</h4>
+                          </div>
+                          <div class="col-sm-6">
+                                  <h4>Available:<span id="ava">{{ 24 if card[-7] == None else  24 - card[-7]|length }}</span></h4>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                          
+                          <div class="col-sm-1" >  
+                              <img src="/assets/driver.JPG" style="height:36px;width:35px;">
+                          </div>
+      
+      
+                          <div class="col-sm-6" style="border: 1px solid black;">
+      
+                          {% for i in range(4) %}
+                              <div class="row" >
+                              
+                                  {% for _ in range(6) %}   
+                                  {% if card[-7] != None %}
+                              
+                                      {% if seatNos[-1] in card[-7] %}
+                                      <div class="col-sm-2">
+                                          <img   title={{seatNos[-1]}} class="unavail_seatings seats"   >
+                                      </div>
+                                      {% else %}
+                                      <div class="col-sm-2">
+                                          <img class = avail_seatings title={{seatNos[-1]}}    >
+                                      </div>
+                                      {% endif %}
+                                  {% else %}
+      
+                                  <div class="col-sm-2">
+                                      <img   title={{seatNos[-1]}} class="avail_seatings seats"  >
+                                  </div>
+                                  {% endif %}
+                                  {% set __ = seatNos.append(seatNos[-1] + 1) %}
+                                  {% endfor %}
+                                                      
+                              </div>
+                              
+                              {% if i == 1 %}
+                              <div class="row" style="height: 20px;border-bottom:1px solid black;border-top:1px solid black; ">
+      
+                              </div>
+                              {% endif %}
+      
+                          {% endfor %}
+                              
+                          </div>
+      
+      
+                              <div class="col-sm-5">
+                                  <div class="row">
+                                      <div class="col-sm-2">
+      
+                                      </div>
+      
+                                      <div class="col-sm-1">
+                                          <img class="avail_seatings">
+                                      </div>
+                                      <div class="col-sm-9">
+                                              <h4>:Available</h4>
+                                          </div>
+                                      
+                                  </div>
+                                  
+                                      <div class="row">
+                                              <div class="col-sm-2">
+      
+                                              </div>
+      
+                                              <div class="col-sm-1">
+                                                  <img class="unavail_seatings" >
+                                              </div>
+                                              <div class="col-sm-9">
+                                                      <h4>:Booked</h4>
+                                                  </div>
+                                              
+                                          </div>
+      
+                              </div>
+                      </div>
+                      
+                  </div>
+              </div>
+              {% else %}
+              <div class="bus-extended-card bg-light text-black-50 sleeping"   >
+                              
+                  <div class="card-header">
+                          <div class="row">
+                              <div class="col-sm-6">
+                                  <h4>Seats:36</h4>
+                              </div>
+                              <div class="col-sm-6">
+                                      <h4>Available:<span id="ava1"></span></h4>
+                                  </div>
+                          </div>
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-sm-1" >
+                                      <img src="/assets/driver.JPG" style="height:36px; margin-top: 70px;width:35px;" >
+      
+                                  </div>
+      
+                                  <div class="col-sm-6">
+      
+                                      <div class="row" >
+                                          
+                                          <div class="col-sm-12">
+                                              <h4 style="text-align: center;">Upper Level</h4>
+                                          </div>
+      
+                                      </div><hr>
+      
+                                      {%  for i in range(2) %}
+                                      <div class="row" ><br>
+      
+                                      
+                                          {% for _ in range(6) %}   
+                                          {% if card[-7] != None %}
+                                     
+                                              {% if seatNos[-1] in card[-7] %}
+                                              <div class="col-sm-2">
+                                                  <img  title={{seatNos[-1]}} class="unavail_sleeping seats"  >
+                                              </div>
+                                              {% else %}
+                                              <div class="col-sm-2">
+                                                  <img  title={{seatNos[-1]}} class="avail_sleeping seats"  >
+                                              </div>
+                                              {% endif %}
+                                          {% else %}
+                                          
+                                          <div class="col-sm-2">
+                                              <img  title={{seatNos[-1]}}   class="avail_sleeping seats" >
+                                          </div>
+                                          {% endif %}
+                                          {% set __ = seatNos.append(seatNos[-1] + 1) %}
+                                          {% endfor %}
+                                                              
+                                      </div>
+                                      <div class="row" >
+      
+                                      
+                                          {% for _ in range(6) %}   
+                                          {% if card[-7] != None %}
+                                   
+                                              {% if seatNos[-1] in card[-7] %}
+                                              <div class="col-sm-2">
+                                                  <img  title={{seatNos[-1]}} class="unavail_sleeping seats"  >
+                                              </div>
+                                              {% else %}
+                                              <div class="col-sm-2">
+                                                  <img  title={{seatNos[-1]}}  class="avail_sleeping seats" >
+                                              </div>
+                                              {% endif %}
+                                          {% else %}
+                                          
+                                          <div class="col-sm-2">
+                                              <img  title={{seatNos[-1]}}  class="avail_sleeping seats" >
+                                          </div>
+                                          {% endif %}
+                                          {% set __ = seatNos.append(seatNos[-1] + 1) %}
+                                          {% endfor %}
+                                                              
+                                      </div>
+                                      <div class="row" style="height: 15px;">
+      
+                                      </div>
+                                      
+                                      <div class="row" >
+      
+                                      
+                                          {% for _ in range(6) %}   
+                                          {% if card[-7] != None %}
+                                      
+                                              {% if seatNos[-1] in card[-7] %}
+                                              <div class="col-sm-2">
+                                                  <img  title={{seatNos[-1]}}  class="unavail_sleeping seats" >
+                                              </div>
+                                              {% else %}
+                                              <div class="col-sm-2">
+                                                  <img  title={{seatNos[-1]}} class="avail_sleeping seats"  >
+                                              </div>
+                                              {% endif %}
+                                          {% else %}
+                                          
+                                          <div class="col-sm-2">
+                                              <img  title={{seatNos[-1]}} class="avail_sleeping seats">
+                                          </div>
+                                          {% endif %}
+                                          {% set __ = seatNos.append(seatNos[-1] + 1) %}
+                                          {% endfor %}
+                                                              
+                                      </div><br>
+                                      
+      
+                                      {% if i == 0%}
+                                      <hr>
+                                      <div class="row" style="height:10px" >
+                                          
+                                          <div class="col-sm-12">
+                                              <h4 style="text-align: center;">Lower Level</h4>
+                                          </div>
+      
+                                      </div>
+                                      <hr>
+                                      {% endif %}
+                                      {% endfor %}
+      
+                                  </div>
+                                  <div class="col-sm-5">
+                                      <div class="row" style="height: 100px;">
+      
+                                      </div>
+                                          <div class="row">
+                                              <div class="col-sm-2">
+      
+                                              </div>
+      
+                                              <div class="col-sm-2">
+                                                  <img class="avail_sleeping">
+                                              </div>
+                                              <div class="col-sm-8">
+                                                  <h4>:Available</h4>
+                                                  </div>
+                                          
+                                          </div>
+                                          
+                                              <div class="row">
+                                                      <div class="col-sm-2">
+              
+                                                      </div>
+              
+                                                      <div class="col-sm-2">
+                                                          <img class="unavail_sleeping">
+                                                      </div>
+                                                      <div class="col-sm-8">
+                                                          <h4>:Booked</h4>
+                                                          </div>
+                                                  
+                                                  </div>
+      
+                                                  </div>
+                                      </div>
+                                  </div>
+              </div>
+              {% endif %}
+           </div>
+      
+          <section style="width: 35% ; float: left; margin: 50px;">
+              <div class="row">
+                  <div class="col-12">
+                      <div class="card bg-light text-dark">
+                          <div class="card-header">
+                              <div class="row">
+                                  <div class="col-12" style="text-align: center;">
+                                      <h3><u><b>Booking Cost</b></u></h3>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="card-body">
+                              <div class="row">
+                                  <div class="col-6">
+                                      <h5><b>Type</b></h5>
+                                      <h5>General</h5>
+      
+                                  </div>
+                                  <div class="col-6">
+                                          <h5><b>Cost</b></h5>
+                                          <h5>{{card[-3]}}</h5>
+                                      
+                                  </div>
+                                 
+                              </div>
+                          </div>
+                          <div class="card-footer">
+                              <div class="row">
+                                  <div class="col-6">
+                                          <h5><b>No. of Seats:</b></h5>
+                                          <h5><b>Total Cost:</b></h5>
+                                      
+      
+                                  </div>
+                                  <div class="col-6">
+                                          <h5 class='pass_no'>0</h5>
+                                          <h5 class='fare'>0</h5>
+      
+                                  </div>
+                              </div>
+      
+                          </div>
+                      </div>
+                  </div>
+              </div> 
+          </section>
+    </section>
+    
+      <section class="passengers container-fluid" style="background-color: transparent;">
+          <div class="row" style="background-color: transparent;">
+                <div id="pass"  class="card col-12"style="background-color: transparent;" >
+                    </div>
+
+          </div>
+        <!-- <button class="clear" >clear</button> -->
+
+        
+
+      </section>  
+
+<script>
+
+  var totalCost = 0
+  var seatSelectedCounter = 0
+  var AllPass = []
+
+  $(document).ready(function(){
+    
+    console.log('hii')
+
+    $(".avail_seatings").attr("src","/assets/ava.gif").css("height","30").css("width","30");
+
+    $(".avail_sleeping").attr("src","/assets/avail.JPG").css("height","25").css("width","30");
+
+    $('.unavail_seatings').attr("src","/assets/book.gif").css("height","30").css("width","30");
+
+    $(".unavail_sleeping").attr("src","/assets/unavail.JPG").css("height","30").css("width","30");
+
+    $(".sel_seating").attr("src","/assets/sel.gif").css("height","30").css("width","30");
+
+    $(".sel_sleeping").attr("src","/assets/booked.JPG").css("height","30").css("width","30");
+
+
+    // $(document).on("click",".clear",function(){
+
+    //   console.log('henlo');
+    //   $("#pass").empty()
+    //   AllPass = []
+
+    // });
+
+    $('.seats').click(function(){
+
+    let img = $(this).attr("src");
+    var sno = $(this).attr("title");
+
+    console.log(img);
+
+        if(img == "/assets/book.gif"){
+
+          alert("already booked")
+
+        }else if( img == '/assets/unavail.JPG'){
+
+          alert("already booked")
+
+        }else if( img =="/assets/sel.gif" ){
+
+          $(this).attr("src","/assets/ava.gif") ;
+
+          for(let i = 0 ; i < seatSelectedCounter ; i ++ ){
+
+            if(AllPass[i]['sno'] == sno){
+              AllPass.splice(i,1)
+            }
+
+          }
+
+          render_cards()
+
+          seatSelectedCounter -= 1
+
+        }else if( img == '/assets/booked.JPG'){
+
+          $(this).attr("src","/assets/avail.JPG") ;
+          seatSelectedCounter -= 1
+
+          for(let i = 0 ; i < seatSelectedCounter ; i ++ ){
+
+            if(AllPass[i]['sno'] == sno){
+              AllPass.splice(i,1)
+            }
+          }
+
+          render_cards()
+          
+
+        }else if( img == '/assets/ava.gif'){
+
+          $(this).attr("src","/assets/sel.gif" );
+
+          seatSelectedCounter += 1
+
+          AllPass.push({
+            sno : sno,
+            name : '',
+            age : '' ,
+            gender : ''
+          })
+
+          render_cards(sno)
+
+        }else if( img == '/assets/avail.JPG'){
+          
+          $(this).attr("src","/assets/booked.JPG" );
+          seatSelectedCounter += 1
+
+          AllPass.push({
+            sno : sno,
+            name : '',
+            age : '' ,
+            gender : ''
+          })
+
+          render_cards(sno)
+
+        }
+
+    renderCost()
+
+  });
+
+  function renderCost(){
+
+    totalCost = seatSelectedCounter*'{{card[-3]}}';
+    $(".fare").text(totalCost);
+    $('.pass_no').text(seatSelectedCounter);
+
+  }
+
+  function render_cards(){
+
+    var pass = $('#pass');
+
+    pass.empty();
+    for(let i = 0 ; i < seatSelectedCounter; i ++ ){
+
+      pass.append('<br><div class="row " style="background-color:transparent">' +
+                '<div class="col-4">' + 
+                    '<div class="card bg-light text-dark">' + 
+                        '<div class="card-header">'+
+                           '<div class="row">'+
+                            '<div class="col-10">'+
+                                '<h3 style="color:black;">Booking Details</h3>'+
+                            '</div>'+
+                            '<div class="col-2">'+
+                               ' <button class = "cancel" value ='+   AllPass[i]["sno"] +  ' style="float: right;border: 0px;background-color: transparent;">&#x2715</button>'+
+                            '</div>'+
+                           '</div>'+
+                        '</div>'+
+                        '<div class="card-body" id =' +  AllPass[i]['sno'] + '>'+
+                            '<div class="row">'+
+                               ' <div class="col-4">'+
+                                    '<h4>Name:</h4><br>'+
+                                    '<h4>Age:</h4><br>'+
+                                    '<h4>Gender:</h4>'+
+                                '</div>'+
+                                '<div class="col-8">'+
+                                    '<input type="text" name="name" placeholder="Enter full name" class="form-control" value = '+ AllPass[i]['name'] +'><br>'+
+                                    '<input type="number" name="age" placeholder="Enter Age" class="form-control"  value = '+ AllPass[i]['age'] +'><br>'+
+                                    '<select name="gender" class="form-control">'+
+                                        '<option value="male">Select</option>'+
+                                        '<option value="male">Male</option>'+
+                                        '<option value="female">Female</option>'+
+                                    '</select>'+
+                                '</div>'+
+                            '</div>'+
+        
+                        '</div>' +
+                        '<div class="card-footer">' +
+                            '<div class="row">'+
+                                '<div class="col-10">'+
+                                '</div>'+
+                                '<div class="col-2">'
+                                    + '<button class="addPass" value =' +  AllPass[i]['sno'] + ' style="float: right;border: 0px;background-color: transparent;font-size: 30px;">&#43</button>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>'
+                +'</div>'
+        + '</div>');
+
+    }
+    pass.append('<br><button class="btn btn-primary" id="submit" style="margin-left-10px">Submit</button>')
+
+  }
+
+  $(document).on('click','.cancel',function(){
+
+    let sno = $(this).attr('value');
+    
+    for(let i = 0; i< seatSelectedCounter; i ++ ){
+
+      if(AllPass[i]['sno'] == sno){
+        seatSelectedCounter -= 1
+        AllPass.splice(i,1);
+      }
+
+    }
+
+    if($('#noofseats').val() == 'Seats:24'){
+      console.log('here')
+      $('img').find(`[title='${sno}']`).attr("src","/assets/ava.JPG") ;
+    }else{
+      var s=$('img').find(`[title="${sno}"]`).attr("src","/assets/avail.JPG") ;
+      console.log(`[title="${sno}"]`)
+      console.log($('img').find(`[title='${sno}']`))
+    }
+          seatSelectedCounter -= 1
+
+          for(let i = 0 ; i < seatSelectedCounter ; i ++ ){
+
+            if(AllPass[i]['sno'] == sno){
+              AllPass.splice(i,1)
+            }
+          }
+
+      
+
+          render_cards()
+    
+
+
+    render_cards(sno);
+    renderCost();
+
+  });
+
+
+  $(document).on('click','.addPass',function(){
+
+    console.log(AllPass);
+
+    let sno = $(this).attr('value');
+    let Pass = $('#' + sno);
+
+    for(let i = 0; i< seatSelectedCounter; i ++ ){
+
+      if(AllPass[i]['sno'] == sno){
+
+        AllPass[i].name = Pass.find("input[name = 'name' ]").val();
+        AllPass[i].gender = Pass.find("select[name ='gender']").children('option').filter(":selected").text();
+        AllPass[i].age = Pass.find('input[name="age"]').val();
+      }
+    }
+
+    Pass.siblings(".card-footer").css('background-color' ,'green');
+  });
+
+  $(document).on('click','#submit',function(){
+
+    var data = {
+      passengers : AllPass
+    };
+    console.log(JSON.stringify(data));
+    jQuery.ajax({
+      url:'/bookticket/',
+      type:"POST",
+      data: JSON.stringify(data),
+      success : function(data,status,xttp){
+
+        console.log(status)
+        if(status=='success'){
+          var url = new URL( window.location.origin + "{{url_for('pay.render_payment')}}");
+          window.location.replace(url);
+        }
+      }
+    })
+  });
+  
+  });
+
+</script>
+
+{% endblock %}

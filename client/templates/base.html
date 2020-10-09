@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MSRTC_HOME PAGE</title>
+
+  <link href="/asset/css/bootstrap.min.css" rel="stylesheet" >
+	<link rel="stylesheet" href="/asset/js/jui/jquery-ui.css">
+	<link rel="stylesheet" href="/asset/js/jui/jquery-ui.structure.css">
+    <link rel="stylesheet" href="/asset/js/jui/jquery-ui.theme.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+
+	
+	<script src="/asset/js/jquery.js"></script>
+	<script src="/asset/js/jui/jquery-ui.js"></script>
+	<script src="/asset/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+
+<style>
+
+body{
+  background-color: rgb(168, 231, 250);
+  font-family: Verdana, sans-serif; 
+}
+
+.alert {
+  padding-left: 7px;
+  padding-right: 3px;
+  padding-top:10px;
+  padding-bottom: 10px;
+  background-color: #054a4d;
+  color: white;
+}
+
+.transition {
+    -webkit-transform: scale(1.02); 
+    -moz-transform: scale(1.02);
+    -o-transform: scale(1.02);
+    transform: scale(1.02);
+}
+.hover {
+	-webkit-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
+}
+
+.hover {
+    width:80px;
+    margin:25px;
+}
+.hover1 {
+	-webkit-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
+}
+
+.hover1 {
+    width:80px;
+    margin:25px;
+}
+</style>
+</head>
+<body>
+  <section>
+    <header>
+      <div class="container-fluid" style="background-color: #42c2e2;">
+        <div class="row">
+          <div class="col-2" >
+            <img src="/assets/logo.jpg" style="width:100px;height: 100px;border-radius: 20px ; border:1px solid black;margin:10px;">
+          </div>
+          <div style="font-size:larger" class="col-4">
+              <h3>MSRTC Online Ticket Service</h3>
+
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid" style="height: 50px; padding: 10px ; background-color: #FFF;">
+        <div class="row">
+          <div class="col-1">
+            <a style="font-size: medium;" href="/">Home</a>
+          </div>
+          <div class="col-1">
+              <a style="font-size: medium;" href="/searchbus/">Search Bus</a>
+
+            
+            </div>
+            <div class="col-1 ">
+                <a style="font-size: medium;" href="/livestatus">Live Status</a>
+            
+              </div>
+              <div class="col-5">
+                </div>
+
+              {% if username == None %}
+              <div class="col-2">
+              </div>
+              
+              <div class="col-1 signup" >
+                  <a style="font-size: medium;" href="/signup"><span class="glyphicon glyphicon-user"></span>  Sign Up</a>
+            
+                </div>
+                <div class="col-1">
+                    <a style="font-size: medium;" href="/login"><span class="glyphicon glyphicon-log-in"></span>  Login</a>
+                  </div>
+
+                  {% else %}
+                <div class="col-3 profile" >
+                    <a style="font-size: medium;float: right;"href="#"><span class="glyphicon glyphicon-user"></span>  {{username}}</a>
+                  </div>
+
+                <div class="col-1 logout">
+                    <a style="font-size: medium;" href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                  </div>
+
+                {% endif %}
+
+                
+                  
+        </div>
+      </div>
+      
+    </header>
+    </section>
+
+    <!-- dynamic part of the html -->
+    {% block content %}
+    {% endblock %}
+
+<br>
+<br>
+<br>
+<footer class="container col-sm-12" style=" overflow: hidden; padding: 0px;background-color: rgb(5, 58, 85);">
+    <div class="footer-top">
+            <div class="container"  style="background-color: rgb(5, 58, 85);border:2px solid rgb(5, 58, 85)">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12 segment-one md-mb-30 sm-mb-30">
+                        <h3 style="color:white;">About Us</h3>
+                        <p  style="color:white;">State Transport Bus Reservation System</p>
+                        <h3  style="color:white;">Contact Us</h3>
+                        <p  style="color:white;"><a href="#"><i class="fa fa-phone"></i>1234567890</a></p>
+                        
+                        <p><a href="#"><i class="fa fa-envelope"></i>support@gmail.com</a></p>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12 segment-two md-mb-30 sm-mb-30">
+                        <h2  style="color:white;">Useful Links</h2>
+                        <ul>
+                            <li><a href="#">Career</a></li>
+                            <li><a href="#">Support</a></li>
+                            
+                            <li><a href="#">Blog</a></li>
+                            
+                        </ul>   
+                    </div>
+                    
+                    <div class="col-md-3 col-sm-6 col-xs-12 segment-three md-mb-30 sm-mb-30">
+                        <h2  style="color:white;">Information</h2>
+                        <ul>
+                            <li><a href="#">T & C</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            
+                            
+                        </ul> 
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12 segment-four md-mb-30 sm-mb-30">
+                        <h2  style="color:white;">Follow Us</h2>
+                        <p  style="color:white;">Pleaese Follow Us On Social Media</p>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+    </div>        
+</footer>
+</body>
+</html>
