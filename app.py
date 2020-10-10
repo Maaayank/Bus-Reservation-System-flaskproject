@@ -1,4 +1,5 @@
 from server import create_app,db
 
 app = create_app()
-app.run(port=12845)
+port = int(os.environ.get("PORT", 5000))
+app.run(host='0.0.0.0', port=port)
