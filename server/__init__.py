@@ -8,7 +8,7 @@ def create_app() :
 
      app.config['SECRET_KEY'] = 'blackcat'
      app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://yujjcgbcxipdsn:4f88cb27f0f30b83ba9246da1d235785227cd8540872973f2425067465dfdf2f@ec2-52-22-216-69.compute-1.amazonaws.com:5432/d7cq6od5bn0ea5'
-
+     
      db.init_app(app)
 
      # blueprint for auth routes in our app
